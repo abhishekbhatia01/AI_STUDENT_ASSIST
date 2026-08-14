@@ -7,7 +7,6 @@ import {
   DATABASE_HOST,
 } from "./config.js";
 
-
 const sequelize = new Sequalize(
   DATABASE_NAME,
   DATABASE_USER,
@@ -28,7 +27,7 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Database connected...");
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
   } catch (error) {
     console.error("Error: " + error);
   }

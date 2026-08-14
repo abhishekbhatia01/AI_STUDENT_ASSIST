@@ -2,7 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const PORT = process.env.PORT || 5000;
-export const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+export const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
+export const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 export const GOOGLE_USER = process.env.GOOGLE_USER;
 export const GOOGLE_PASSWORD = process.env.GOOGLE_PASSWORD;
 export const DATABASE_NAME = process.env.DATABASE_NAME;
@@ -28,7 +29,11 @@ if(!PORT){
     throw new Error("PORT is not defined in the environment variables");
 }
 
-if(!JWT_SECRET){
+if(!JWT_ACCESS_SECRET){
+    throw new Error("JWT_SECRET is not defined in the environment variables");
+}
+
+if(!JWT_REFRESH_SECRET){
     throw new Error("JWT_SECRET is not defined in the environment variables");
 }
 

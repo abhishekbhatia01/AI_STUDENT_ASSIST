@@ -5,3 +5,16 @@ export const createOTP = async (otpData, transaction) => {
     transaction,
   });
 };
+
+export const findOTPByEmail = async (email) => {
+  return OTP.findOne({
+    where: { email },
+    order: [["createdAt", "DESC"]],
+  });
+};
+
+export const deleteOTPByEmail = async (email) => {
+  return OTP.destroy({
+    where: { email },
+  });
+};
