@@ -5,7 +5,7 @@ export const register = asyncHandler(async (req, res) => {
   const user = await authService.registerUser(req.body);
 
   res.status(201).json({
-    message: "User registered successfully",
+    message: "OTP sent successfully",
     user,
   });
 });
@@ -36,8 +36,8 @@ export const login = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000, 
-  })
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
   res.status(200).json({
     message: "User logged in successfully",
     user,

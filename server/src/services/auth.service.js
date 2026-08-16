@@ -5,7 +5,7 @@ import * as userRepository from "../repositories/user.repository.js";
 import * as otpRepository from "../repositories/otp.repository.js";
 
 import { generateOTP, getOtpHtml } from "../utils/email.utils.js";
-import { sendEmail } from "../services/email.service.js";
+import { sendEmail } from "./email.service.js";
 import AppErrors from "../utils/AppErrors.utils.js";
 import {
   generateAcessToken,
@@ -146,7 +146,9 @@ export const loginUser = async (email, password) => {
 
   return {
     user: userWithoutPassword,
-    accessToken,
-    refreshToken,
+    tokens: {
+      accessToken,
+      refreshToken,
+    },
   };
 };

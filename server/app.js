@@ -7,12 +7,13 @@ import globalErrorHandler from "./src/middlewares/error.mdiddleware.js";
 import AppErrors from "./src/utils/AppErrors.utils.js";
 import refreshTokenRoutes from "./src/routers/refreshAccessToken.route.js";
 import coockieParser from "cookie-parser";
+import { authMiddleware } from "./src/middlewares/auth.middleware.js";
 
 const app = express();
 app.use(express.json());
 app.use(coockieParser());
   
-app.get("/health", (req, res) => {
+app.get("/api/health", authMiddleware, (req, res) => {
   res.status(200).json({ message: "Server is running" });
 });
 

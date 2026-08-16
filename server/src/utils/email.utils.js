@@ -22,7 +22,7 @@ export const getOtpHtml = (otp) => {
         text-align:center;
       ">
         <h1 style="margin:0;color:#ffffff;">
-          AI Student Assistant
+          AI Notes Assistant
         </h1>
       </div>
 
