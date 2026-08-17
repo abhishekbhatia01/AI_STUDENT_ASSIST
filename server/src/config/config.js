@@ -12,6 +12,11 @@ export const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 export const DATABASE_HOST = process.env.DATABASE_HOST;
 export const DATABASE_DIALECT = process.env.DATABASE_DIALECT;
 export const DATABASE_PORT = process.env.DATABASE_PORT;
+export const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+if(!GEMINI_API_KEY){
+    throw new Error("GEMINI_API_KEY is not defined in the environment variables");
+}
 
 if(!DATABASE_NAME) {
     throw new Error("DATABASE_NAME is not defined in the environment variables");
