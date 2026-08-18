@@ -43,3 +43,10 @@ export const login = asyncHandler(async (req, res) => {
     user,
   });
 });
+
+export const getMe = asyncHandler(async (req, res)=>{
+  const user = await authService.getMe(req.user.id);
+  res.status(200).json({
+    user
+  });
+});

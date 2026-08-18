@@ -11,3 +11,7 @@ export const createUser = async (userData, transaction) => {
         transaction
     });
 };
+
+export const findUserById = async (id) => {
+  return User.findByPk(id);
+}

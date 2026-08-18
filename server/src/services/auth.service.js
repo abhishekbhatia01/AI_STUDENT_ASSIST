@@ -152,3 +152,15 @@ export const loginUser = async (email, password) => {
     },
   };
 };
+
+export const getMe = async (id) => {
+  const user = await userRepository.findUserById(id);
+
+  if (!user) {
+    throw new AppErrors("User not found", 404);
+  }
+
+  const { password: _, ...userWithoutPass } = user.toJSON();
+
+  return userWithoutPass;
+};
