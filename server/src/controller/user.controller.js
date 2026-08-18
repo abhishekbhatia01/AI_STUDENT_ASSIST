@@ -32,15 +32,23 @@ export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUser(email, password);
 
-  res.cookie("refreshToken", user.refreshToken, {
+  res.cookie("refreshToken", user.tokens.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
+
+  res.cookie("accessToken", user.tokens.accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 15 * 60 * 1000,
+  });
+  const { tokens, ...userWithoutToken } = user;
   res.status(200).json({
     message: "User logged in successfully",
-    user,
+    userWithoutToken,
   });
 });
 

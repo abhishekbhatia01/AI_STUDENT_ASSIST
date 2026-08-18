@@ -16,16 +16,11 @@ export const registerUser = async ({
   fullname,
   email,
   password,
-  confirmPassword,
 }) => {
   const existingUser = await userRepository.findUserByEmail(email);
 
   if (existingUser) {
     throw new AppErrors("User already exists", 400);
-  }
-
-  if (password !== confirmPassword) {
-    throw new AppErrors("Passwords do not match", 400);
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
