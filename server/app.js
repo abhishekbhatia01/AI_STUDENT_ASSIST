@@ -10,6 +10,7 @@ import coockieParser from "cookie-parser";
 import authMiddleware from "./src/middlewares/auth.middleware.js";
 import authorizedRole from "./src/middlewares/roleMiddleware.js";
 import aiRoutes from "./src/routers/ai.route.js";
+import textRoutes from "./src/routers/text-file.route.js";
 import cors from "cors";
 
 const app = express();
@@ -38,7 +39,7 @@ app.get(
 app.use("/api", userRoutes);
 app.use("/api", refreshTokenRoutes);
 app.use("/api/ai", aiRoutes);
-
+app.use("/api/analyze", textRoutes);
 app.use((req, res, next) => {
   next(new AppErrors(`Can't find ${req.originalUrl} on this server!`, 404));
 });
