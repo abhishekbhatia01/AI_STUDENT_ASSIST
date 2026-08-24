@@ -1,15 +1,15 @@
 import express from "express";
-import { sequelize } from "./src/config/db.js";
-import userRoutes from "./src/routers/auth.route.js";
-import { PORT } from "./src/config/config.js";
+import userRoutes from "./src/routers/auth.routes.js";
 import "./src/associations/otp.association.js";
+import "./src/associations/notes.association.js";
 import globalErrorHandler from "./src/middlewares/error.mdiddleware.js";
 import AppErrors from "./src/utils/AppErrors.utils.js";
-import refreshTokenRoutes from "./src/routers/refreshAccessToken.route.js";
+import refreshTokenRoutes from "./src/routers/refreshAccessToken.routes.js";
 import coockieParser from "cookie-parser";
 import authMiddleware from "./src/middlewares/auth.middleware.js";
 import authorizedRole from "./src/middlewares/roleMiddleware.js";
-import aiRoutes from "./src/routers/ai.route.js";
+import aiRoutes from "./src/routers/ai.routes.js";
+import notesRoutes from "./src/routers/notes.routes.js";
 import cors from "cors";
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(coockieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
     credentials: true,
   }),
 );
@@ -38,6 +38,8 @@ app.get(
 app.use("/api", userRoutes);
 app.use("/api", refreshTokenRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/notes", notesRoutes);
+
 app.use((req, res, next) => {
   next(new AppErrors(`Can't find ${req.originalUrl} on this server!`, 404));
 });

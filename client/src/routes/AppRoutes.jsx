@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import SignUp from "../pages/SignUp";
-import VerifyOTP from "../pages/VerifyOTP";
-import Login from "../pages/Login";
+import SignUp from "../pages/auth/SignUp";
+import VerifyOTP from "../pages/auth/VerifyOTP";
+import Login from "../pages/auth/Login";
+import Notes from "../pages/Notes";
 
 function AppRoutes() {
   return (
@@ -10,6 +11,8 @@ function AppRoutes() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/verify-otp" element={<VerifyOTP />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/noteGenerate" element={<Notes />} />
+      <Route path="*" element={<Login />} />
       {/* Protected Routes */}
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>

@@ -5,14 +5,13 @@ export const generateResponse = asyncHandler(async (req, res) => {
   const file = req.file;
   const prompt = req.body.prompt;
 
-  if (!file) {
-    return res.status(400).json({
-      success: false,
-      message: "No file provided",
-    });
-  }
+   
 
-  const response = await generateAiResponse(file, prompt);
+  const response = await generateAiResponse(
+    file,
+    prompt,
+    req.user.id
+  );
 
   res.status(200).json({
     success: true,

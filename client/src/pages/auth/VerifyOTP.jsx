@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import { verifyOTP, resendOTP } from "../api/auth/authApi.js";
+import { verifyOTP, resendOTP } from "../../api/auth/authApi.js";
 
 const VerifyOTP = () => {
   const [otp, setOtp] = useState("");
@@ -15,9 +15,7 @@ const VerifyOTP = () => {
 
   // Handle OTP input
   const handleChange = (e) => {
-    const value = e.target.value
-      .replace(/\D/g, "")
-      .slice(0, 6);
+    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
 
     setOtp(value);
   };
@@ -43,9 +41,7 @@ const VerifyOTP = () => {
 
       console.log("OTP verified:", response);
 
-      toast.success(
-        "OTP verified successfully. Your account is now verified."
-      );
+      toast.success("OTP verified successfully. Your account is now verified.");
 
       navigate("/login");
     } catch (error) {
@@ -53,7 +49,7 @@ const VerifyOTP = () => {
 
       toast.error(
         error.response?.data?.message ||
-          "An error occurred during OTP verification."
+          "An error occurred during OTP verification.",
       );
     } finally {
       setLoading(false);
@@ -74,15 +70,13 @@ const VerifyOTP = () => {
 
       console.log("OTP resent successfully:", response);
 
-      toast.success(
-        "OTP resent successfully. Please check your email."
-      );
+      toast.success("OTP resent successfully. Please check your email.");
     } catch (error) {
       console.error("Resend OTP error:", error);
 
       toast.error(
         error.response?.data?.message ||
-          "An error occurred while resending OTP."
+          "An error occurred while resending OTP.",
       );
     } finally {
       setResendLoading(false);
@@ -92,7 +86,6 @@ const VerifyOTP = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
-
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-900">
@@ -165,9 +158,7 @@ const VerifyOTP = () => {
 
           {/* Resend */}
           <div className="text-center mt-6">
-            <p className="text-sm text-slate-500">
-              Didn't receive the code?
-            </p>
+            <p className="text-sm text-slate-500">Didn't receive the code?</p>
 
             <button
               type="button"

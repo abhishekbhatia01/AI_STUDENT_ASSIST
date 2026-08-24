@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { registerUser } from "../api/auth/authApi.js";
+import { registerUser } from "../../api/auth/authApi.js";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {

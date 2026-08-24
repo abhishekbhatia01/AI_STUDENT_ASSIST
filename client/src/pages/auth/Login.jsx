@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { loginThunk, clearError } from "../store/authSlice/authSlice";
+import { loginThunk, clearError } from "../../store/authSlice/authSlice";
 import { toast } from "react-toastify";
 
 const Login = () => {
