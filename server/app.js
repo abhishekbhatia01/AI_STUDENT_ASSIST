@@ -15,14 +15,26 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(coockieParser());
+app.use(express.static("public"));
+
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
 
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
 
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 app.get(
   "/api/protected-route",
   authMiddleware,

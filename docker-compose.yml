@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: ./server
+    container_name: studyzen-server
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    restart: unless-stopped
+
+
+  frontend:
+    build: ./client
+    container_name: studyzen-client
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

@@ -13,3 +13,12 @@ export const saveNotes = asyncHandler(async (req, res) => {
     data: notes,
   });
 });
+
+export const getSavedNotes = asyncHandler(async (req, res) => {
+  const notes = await notesService.getNotesByUser(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    data: notes,
+  });
+});

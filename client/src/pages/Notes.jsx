@@ -71,117 +71,147 @@ const Notes = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-5 py-10">
-      <div className="mx-auto w-full max-w-3xl">
-        {/* Generator Card */}
-        <div className="rounded-2xl bg-white p-8 shadow-lg">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="mb-2 text-3xl font-bold text-gray-800">
-              AI Notes Generator
-            </h1>
-
-            <p className="text-sm leading-relaxed text-gray-500">
-              Upload your study material and tell AI how you want it analyzed.
-            </p>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            {/* File Upload */}
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="file"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Upload Study Material
-              </label>
-
-              <input
-                id="file"
-                type="file"
-                name="file"
-                accept=".pdf,.docx,.pptx,image/*"
-                onChange={handleFileChange}
-                className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-700 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-indigo-700"
-              />
-
-              {formData.file && (
-                <p className="text-xs text-gray-500">
-                  Selected: {formData.file.name}
-                </p>
-              )}
-            </div>
-
-            {/* Prompt */}
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="prompt"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Your Prompt
-              </label>
-
-              <textarea
-                id="prompt"
-                name="prompt"
-                value={formData.prompt}
-                onChange={handleChange}
-                placeholder="What do you want AI to do with this file?"
-                rows="7"
-                className="w-full resize-y rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
-              />
-            </div>
-
-            {/* Generate Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-xl bg-indigo-600 px-5 py-3.5 text-base font-semibold text-white transition hover:bg-indigo-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {loading ? "Generating..." : "Generate Notes"}
-            </button>
-          </form>
+    <div className="min-h-screen bg-slate-100 px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="mb-8">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-indigo-600">
+            Study workspace
+          </p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Turn study material into clear notes.
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+            Add a file, describe what you need, and keep the finished notes
+            beside your workspace.
+          </p>
         </div>
 
-        {generatedNotes && (
-          <div className="mt-8 rounded-2xl bg-white p-8 shadow-lg">
-            <div className="mb-6 flex items-center justify-between">
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.45fr)]">
+          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:p-8">
+            <div className="mb-8 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-100 text-lg text-indigo-700">
+                ✦
+              </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Generated Notes
-                </h2>
+                <h2 className="font-bold text-slate-900">Create notes</h2>
+                <p className="text-xs text-slate-500">
+                  Give AI the right context
+                </p>
+              </div>
+            </div>
 
-                {generatedNotes.originalFileName && (
-                  <p className="mt-1 text-sm text-gray-500">
-                    {generatedNotes.originalFileName}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="file"
+                  className="text-sm font-semibold text-slate-700"
+                >
+                  Study material
+                </label>
+                <div className="rounded-2xl border-2 border-dashed border-indigo-200 bg-indigo-50/60 p-4 transition hover:border-indigo-400">
+                  <input
+                    id="file"
+                    type="file"
+                    name="file"
+                    accept=".pdf,.docx,.pptx,image/*"
+                    onChange={handleFileChange}
+                    className="w-full text-sm text-slate-600 file:mr-3 file:rounded-xl file:border-0 file:bg-indigo-600 file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-white hover:file:bg-indigo-700"
+                  />
+                  <p className="mt-3 text-xs leading-5 text-slate-500">
+                    PDF, DOCX, PPTX, or an image
+                  </p>
+                </div>
+                {formData.file && (
+                  <p className="truncate text-xs font-medium text-indigo-700">
+                    Selected: {formData.file.name}
                   </p>
                 )}
               </div>
 
-              <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                Generated
-              </span>
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="prompt"
+                  className="text-sm font-semibold text-slate-700"
+                >
+                  Your prompt
+                </label>
+                <textarea
+                  id="prompt"
+                  name="prompt"
+                  value={formData.prompt}
+                  onChange={handleChange}
+                  placeholder="Summarize the key concepts and create revision questions..."
+                  rows="9"
+                  className="w-full resize-y rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-2xl bg-indigo-600 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:bg-indigo-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? "Generating..." : "Generate notes"}
+              </button>
+            </form>
+          </section>
+
+          <section className="min-h-[540px] rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:p-8">
+            <div className="mb-6 flex items-start justify-between gap-4">
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-emerald-600">
+                  Output
+                </p>
+                <h2 className="text-2xl font-bold text-slate-900">
+                  Generated notes
+                </h2>
+                {generatedNotes?.originalFileName && (
+                  <p className="mt-1 max-w-[30rem] truncate text-sm text-slate-500">
+                    {generatedNotes.originalFileName}
+                  </p>
+                )}
+              </div>
+              {generatedNotes && (
+                <span className="shrink-0 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
+                  Ready
+                </span>
+              )}
             </div>
 
-            <div className="max-h-[650px] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-              <article className="prose prose-indigo max-w-none">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {generatedNotes.aiResponse}
-                </ReactMarkdown>
-              </article>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving}
-              className="mt-6 w-full rounded-xl bg-green-600 px-5 py-3.5 text-base font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {saving ? "Saving..." : "Save Notes"}
-            </button>
-          </div>
-        )}
+            {generatedNotes ? (
+              <>
+                <div className="max-h-[650px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-8">
+                  <article className="prose prose-indigo max-w-none">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {generatedNotes.aiResponse}
+                    </ReactMarkdown>
+                  </article>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={saving}
+                  className="mt-6 w-full rounded-2xl bg-emerald-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {saving ? "Saving..." : "Save notes"}
+                </button>
+              </>
+            ) : (
+              <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 text-center">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm">
+                  ◌
+                </div>
+                <h3 className="font-semibold text-slate-800">
+                  Your notes will appear here
+                </h3>
+                <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500">
+                  Upload a study file and add a prompt to create a focused set
+                  of notes.
+                </p>
+              </div>
+            )}
+          </section>
+        </div>
       </div>
     </div>
   );
