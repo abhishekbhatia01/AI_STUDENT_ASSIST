@@ -13,9 +13,14 @@ export const DATABASE_HOST = process.env.DATABASE_HOST;
 export const DATABASE_DIALECT = process.env.DATABASE_DIALECT;
 export const DATABASE_PORT = process.env.DATABASE_PORT;
 export const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+export const DATABASE_URL = process.env.DATABASE_URL;
 
 if(!GEMINI_API_KEY){
     throw new Error("GEMINI_API_KEY is not defined in the environment variables");
+}
+
+if(!DATABASE_URL) {
+    throw new Error("DATABASE_URL is not defined in the environment variables");
 }
 
 if(!DATABASE_NAME) {

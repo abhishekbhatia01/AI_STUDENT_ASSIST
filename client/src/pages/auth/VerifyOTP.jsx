@@ -84,19 +84,19 @@ const VerifyOTP = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f4ed] px-4 py-10">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="font-serif text-4xl font-normal tracking-[-.04em] text-[#1b2925]">
             Verify Your Email
           </h1>
 
-          <p className="text-slate-500 mt-2">
+          <p className="mt-2 text-[#68736c]">
             We've sent a 6-digit verification code to
           </p>
 
-          <p className="text-sm font-semibold text-slate-700 mt-2 break-all">
+          <p className="mt-2 break-all text-sm font-semibold text-[#304039]">
             {email || "your email"}
           </p>
         </div>
@@ -104,13 +104,13 @@ const VerifyOTP = () => {
         {/* Card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 p-7 sm:p-8"
+          className="rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] p-7 shadow-xl shadow-[#435044]/10 sm:p-8"
         >
           {/* OTP Input */}
           <div>
             <label
               htmlFor="otp"
-              className="block text-sm font-medium text-slate-700 mb-2"
+              className="mb-2 block text-sm font-medium text-[#304039]"
             >
               Enter OTP
             </label>
@@ -127,16 +127,16 @@ const VerifyOTP = () => {
               onChange={handleChange}
               disabled={loading}
               className="w-full px-4 py-4 rounded-xl border border-slate-200
-                bg-slate-50 text-slate-900
+                bg-[#f5f4ed] text-[#1b2925]
                 text-center text-2xl font-semibold tracking-[0.5em]
                 outline-none transition
                 focus:bg-white
-                focus:border-blue-500
-                focus:ring-4 focus:ring-blue-500/10
+                focus:border-[#e9914d]
+                focus:ring-4 focus:ring-[#e9914d]/10
                 disabled:opacity-60"
             />
 
-            <p className="text-xs text-slate-400 text-center mt-3">
+            <p className="mt-3 text-center text-xs text-[#87908a]">
               Enter the 6-digit code sent to your email.
             </p>
           </div>
@@ -146,27 +146,27 @@ const VerifyOTP = () => {
             type="submit"
             disabled={loading || resendLoading || otp.length !== 6}
             className="w-full mt-6 py-3.5 rounded-xl
-              bg-blue-600 text-white font-semibold
-              hover:bg-blue-700
-              disabled:bg-blue-300
+              bg-[#1b2925] text-white font-semibold
+              hover:bg-[#2c403a]
+              disabled:bg-[#aeb9ae]
               disabled:cursor-not-allowed
               transition duration-200
-              shadow-lg shadow-blue-600/20"
+              shadow-lg shadow-[#1b2925]/20"
           >
             {loading ? "Verifying..." : "Verify OTP"}
           </button>
 
           {/* Resend */}
           <div className="text-center mt-6">
-            <p className="text-sm text-slate-500">Didn't receive the code?</p>
+            <p className="text-sm text-[#68736c]">Didn't receive the code?</p>
 
             <button
               type="button"
               onClick={handleResendOTP}
               disabled={resendLoading || loading}
-              className="mt-1 text-sm font-semibold text-blue-600
-                hover:text-blue-700
-                disabled:text-blue-300
+              className="mt-1 text-sm font-semibold text-[#d4773d]
+                hover:text-[#b45b2b]
+                disabled:text-[#efc18e]
                 disabled:cursor-not-allowed"
             >
               {resendLoading ? "Sending..." : "Resend OTP"}
@@ -175,7 +175,7 @@ const VerifyOTP = () => {
         </form>
 
         {/* Footer */}
-        <p className="text-center text-xs text-slate-400 mt-6">
+        <p className="mt-6 text-center text-xs text-[#87908a]">
           Secure email verification for AI Student Assistant
         </p>
       </div>

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const dispatch = useDispatch();
- 
+
   const { loading, error } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
@@ -47,23 +47,22 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f4ed] px-4 py-10">
       {/* Main Card */}
       <div className="w-full max-w-md">
         {/* Logo / Branding */}
         <div className="text-center mb-8">
-
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="font-serif text-4xl font-normal tracking-[-.04em] text-[#1b2925]">
             Welcome back
           </h1>
 
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-[#68736c]">
             Sign in to continue learning with AI
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-xl shadow-slate-200/60 sm:p-8">
+        <div className="rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] p-7 shadow-xl shadow-[#435044]/10 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Error */}
             {error && (
@@ -90,7 +89,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-semibold text-slate-700"
+                className="mb-2 block text-sm font-semibold text-[#304039]"
               >
                 Email address
               </label>
@@ -98,7 +97,7 @@ const Login = () => {
               <div className="relative">
                 <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                   <svg
-                    className="h-5 w-5 text-slate-400"
+                    className="h-5 w-5 text-[#87908a]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -120,7 +119,7 @@ const Login = () => {
                   onChange={handleChange}
                   placeholder="you@example.com"
                   required
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full rounded-[3px] border border-[#d7dcd3] bg-[#f5f4ed] py-3.5 pl-11 pr-4 text-sm text-[#1b2925] outline-none transition placeholder:text-[#87908a] hover:border-[#aeb9ae] focus:border-[#e9914d] focus:bg-white focus:ring-4 focus:ring-[#e9914d]/10"
                 />
               </div>
             </div>
@@ -130,14 +129,14 @@ const Login = () => {
               <div className="mb-2 flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-slate-700"
+                  className="block text-sm font-semibold text-[#304039]"
                 >
                   Password
                 </label>
 
                 <Link
                   to="/forgot-password"
-                  className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+                  className="text-xs font-semibold text-[#d4773d] hover:text-[#b45b2b]"
                 >
                   Forgot password?
                 </Link>
@@ -146,7 +145,7 @@ const Login = () => {
               <div className="relative">
                 <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                   <svg
-                    className="h-5 w-5 text-slate-400"
+                    className="h-5 w-5 text-[#87908a]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -168,7 +167,7 @@ const Login = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full rounded-[3px] border border-[#d7dcd3] bg-[#f5f4ed] py-3.5 pl-11 pr-4 text-sm text-[#1b2925] outline-none transition placeholder:text-[#87908a] hover:border-[#aeb9ae] focus:border-[#e9914d] focus:bg-white focus:ring-4 focus:ring-[#e9914d]/10"
                 />
               </div>
             </div>
@@ -178,10 +177,10 @@ const Login = () => {
               <label className="flex cursor-pointer items-center gap-2">
                 <input
                   type="checkbox"
-                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="h-4 w-4 rounded border-[#aeb9ae] text-[#e9914d] focus:ring-[#e9914d]"
                 />
 
-                <span className="text-sm text-slate-500">Remember me</span>
+                <span className="text-sm text-[#68736c]">Remember me</span>
               </label>
             </div>
 
@@ -189,7 +188,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-blue-600 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition duration-200 hover:bg-blue-700 hover:shadow-blue-600/30 focus:outline-none focus:ring-4 focus:ring-blue-500/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-blue-300 disabled:shadow-none"
+              className="w-full rounded-[3px] bg-[#1b2925] py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1b2925]/20 transition duration-200 hover:bg-[#2c403a] focus:outline-none focus:ring-4 focus:ring-[#e9914d]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-[#aeb9ae] disabled:shadow-none"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -222,18 +221,18 @@ const Login = () => {
 
           {/* Divider */}
           <div className="my-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-slate-200" />
-            <span className="text-xs text-slate-400">OR</span>
-            <div className="h-px flex-1 bg-slate-200" />
+            <div className="h-px flex-1 bg-[#d7dcd3]" />
+            <span className="text-xs text-[#87908a]">OR</span>
+            <div className="h-px flex-1 bg-[#d7dcd3]" />
           </div>
 
           {/* Signup */}
           <div className="text-center">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-[#68736c]">
               Don't have an account?{" "}
               <Link
                 to="/signup"
-                className="font-semibold text-blue-600 transition hover:text-blue-700"
+                className="font-semibold text-[#d4773d] transition hover:text-[#b45b2b]"
               >
                 Create account
               </Link>
@@ -243,7 +242,7 @@ const Login = () => {
 
         {/* Footer */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#87908a]">
             © 2026 AI Student Assistant. Learn smarter, not harder.
           </p>
         </div>

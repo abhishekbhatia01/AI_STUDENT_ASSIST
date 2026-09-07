@@ -62,27 +62,27 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f4ed] px-4 py-10">
       <div className="w-full max-w-md">
         {/* Branding */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="font-serif text-4xl font-normal tracking-[-.04em] text-[#1b2925]">
             Create your account
           </h1>
 
-          <p className="text-slate-500 mt-2">
+          <p className="mt-2 text-[#68736c]">
             Start learning smarter with AI Student Assistant
           </p>
         </div>
 
         {/* Signup Card */}
-        <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 p-7 sm:p-8">
+        <div className="rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] p-7 shadow-xl shadow-[#435044]/10 sm:p-8">
           <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Full Name */}
             <div>
               <label
                 htmlFor="fullname"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="mb-2 block text-sm font-medium text-[#304039]"
               >
                 Full Name
               </label>
@@ -96,10 +96,10 @@ function SignUp() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-slate-200
-                bg-slate-50 text-slate-900 placeholder:text-slate-400
+                bg-[#f5f4ed] text-[#1b2925] placeholder:text-[#87908a]
                 outline-none transition
-                focus:bg-white focus:border-blue-500
-                focus:ring-4 focus:ring-blue-500/10"
+                focus:bg-white focus:border-[#e9914d]
+                focus:ring-4 focus:ring-[#e9914d]/10"
               />
             </div>
 
@@ -107,7 +107,7 @@ function SignUp() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="mb-2 block text-sm font-medium text-[#304039]"
               >
                 Email Address
               </label>
@@ -121,10 +121,10 @@ function SignUp() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-slate-200
-                bg-slate-50 text-slate-900 placeholder:text-slate-400
+                bg-[#f5f4ed] text-[#1b2925] placeholder:text-[#87908a]
                 outline-none transition
-                focus:bg-white focus:border-blue-500
-                focus:ring-4 focus:ring-blue-500/10"
+                focus:bg-white focus:border-[#e9914d]
+                focus:ring-4 focus:ring-[#e9914d]/10"
               />
             </div>
 
@@ -132,7 +132,7 @@ function SignUp() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="mb-2 block text-sm font-medium text-[#304039]"
               >
                 Password
               </label>
@@ -146,13 +146,13 @@ function SignUp() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-slate-200
-                bg-slate-50 text-slate-900 placeholder:text-slate-400
+                bg-[#f5f4ed] text-[#1b2925] placeholder:text-[#87908a]
                 outline-none transition
-                focus:bg-white focus:border-blue-500
-                focus:ring-4 focus:ring-blue-500/10"
+                focus:bg-white focus:border-[#e9914d]
+                focus:ring-4 focus:ring-[#e9914d]/10"
               />
 
-              <p className="text-xs text-slate-400 mt-2">
+              <p className="mt-2 text-xs text-[#87908a]">
                 Use a strong password to keep your account secure.
               </p>
             </div>
@@ -161,7 +161,7 @@ function SignUp() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="mb-2 block text-sm font-medium text-[#304039]"
               >
                 Confirm Password
               </label>
@@ -175,10 +175,10 @@ function SignUp() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-slate-200
-                bg-slate-50 text-slate-900 placeholder:text-slate-400
+                bg-[#f5f4ed] text-[#1b2925] placeholder:text-[#87908a]
                 outline-none transition
-                focus:bg-white focus:border-blue-500
-                focus:ring-4 focus:ring-blue-500/10"
+                focus:bg-white focus:border-[#e9914d]
+                focus:ring-4 focus:ring-[#e9914d]/10"
               />
             </div>
 
@@ -186,12 +186,12 @@ function SignUp() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700
-              disabled:bg-blue-300 disabled:cursor-not-allowed
+              className="w-full rounded-[3px] bg-[#1b2925] hover:bg-[#2c403a]
+              disabled:bg-[#aeb9ae] disabled:cursor-not-allowed
               text-white font-semibold py-3.5 rounded-xl
               transition duration-200
-              shadow-lg shadow-blue-600/20
-              hover:shadow-blue-600/30
+              shadow-lg shadow-[#1b2925]/20
+              hover:shadow-[#1b2925]/30
               active:scale-[0.98]"
             >
               {loading ? "Creating Account..." : "Create Account"}
@@ -200,11 +200,11 @@ function SignUp() {
 
           {/* Login Link */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-[#68736c]">
               Already have an account?{" "}
               <a
                 href="/login"
-                className="font-semibold text-blue-600 hover:text-blue-700"
+                className="font-semibold text-[#d4773d] hover:text-[#b45b2b]"
               >
                 Log in
               </a>
@@ -213,7 +213,7 @@ function SignUp() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-xs text-slate-400 mt-6">
+        <p className="mt-6 text-center text-xs text-[#87908a]">
           Your learning journey starts here.
         </p>
       </div>
