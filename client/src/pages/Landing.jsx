@@ -69,8 +69,8 @@ const Landing = () => (
           <em className="text-[#e9914d]">Learn more deeply.</em>
         </h1>
         <p className="max-w-[405px] text-sm leading-7 text-[#68736c]">
-          StudyZen turns your course material into useful notes,
-          thoughtful answers, and a study rhythm that feels like yours.
+          StudyZen turns your course material into useful notes, thoughtful
+          answers, and a study rhythm that feels like yours.
         </p>
         <div className="mt-7 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
           <Link
