@@ -5,9 +5,8 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - ./server/.env
+      - /opt/studyzen/server.env
     restart: unless-stopped
-
 
   frontend:
     build: ./client
@@ -15,4 +14,3 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-    

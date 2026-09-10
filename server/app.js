@@ -17,7 +17,12 @@ app.use(express.json());
 app.use(coockieParser());
 app.use(express.static("public"));
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "https://studyzen.me",
+  "https://www.studyzen.me",
+];
 
 app.use(
   cors({
