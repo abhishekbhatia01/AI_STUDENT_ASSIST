@@ -176,7 +176,7 @@ const VerifyOTP = () => {
 
         {/* Footer */}
         <p className="mt-6 text-center text-xs text-[#87908a]">
-          Secure email verification for AI Student Assistant
+          Secure email verification for StudyZen
         </p>
       </div>
     </div>

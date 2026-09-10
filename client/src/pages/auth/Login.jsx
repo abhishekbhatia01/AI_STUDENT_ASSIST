@@ -243,7 +243,7 @@ const Login = () => {
         {/* Footer */}
         <div className="mt-6 text-center">
           <p className="text-xs text-[#87908a]">
-            © 2026 AI Student Assistant. Learn smarter, not harder.
+            © 2026 StudyZen. Learn smarter, not harder.
           </p>
         </div>
       </div>

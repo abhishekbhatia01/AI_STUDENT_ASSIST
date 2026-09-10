@@ -17,9 +17,9 @@ const StudySidebar = () => {
           className="flex items-center gap-2 text-[17px] font-bold tracking-[-.04em] text-[#18221f]"
         >
           <span className="grid h-7 w-7 place-items-center rounded-full bg-[#f4a248] text-white">
-            a/
+            S/
           </span>
-          <span>assist</span>
+          <span>StudyZen</span>
         </Link>
 
         <div className="mt-8 flex gap-2 overflow-x-auto lg:mt-16 lg:block lg:space-y-2">

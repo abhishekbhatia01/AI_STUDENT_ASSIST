@@ -71,7 +71,7 @@ function SignUp() {
           </h1>
 
           <p className="mt-2 text-[#68736c]">
-            Start learning smarter with AI Student Assistant
+            Start learning smarter with StudyZen
           </p>
         </div>
 

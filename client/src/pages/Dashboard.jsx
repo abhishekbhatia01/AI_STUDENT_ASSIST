@@ -17,7 +17,7 @@ const Dashboard = () => {
             </p>
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <h1 className="font-serif text-5xl font-normal tracking-[-.05em] text-[#1b2925] sm:text-6xl">
+                <h1 className="font-serif text-5xl font-normal tracking-tighter text-[#1b2925] sm:text-6xl">
                   Good to see you,{" "}
                   <em className="text-[#e9914d]">{firstName}.</em>
                 </h1>

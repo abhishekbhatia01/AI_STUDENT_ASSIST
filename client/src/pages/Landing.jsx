@@ -32,9 +32,9 @@ const Landing = () => (
         className="flex items-center gap-2 text-[17px] font-bold tracking-[-.04em]"
       >
         <span className="grid h-7 w-7 place-items-center rounded-full bg-[#f4a248] text-white">
-          a/
+          S/
         </span>
-        <span>assist</span>
+        <span>StudyZen</span>
       </Link>
       <div className="hidden gap-8 text-xs text-[#68736c] md:flex">
         <a href="#how-it-works" className="hover:text-[#18221f]">
@@ -69,7 +69,7 @@ const Landing = () => (
           <em className="text-[#e9914d]">Learn more deeply.</em>
         </h1>
         <p className="max-w-[405px] text-sm leading-7 text-[#68736c]">
-          AI Student Assist turns your course material into useful notes,
+          StudyZen turns your course material into useful notes,
           thoughtful answers, and a study rhythm that feels like yours.
         </p>
         <div className="mt-7 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
@@ -117,7 +117,7 @@ const Landing = () => (
         <div className="absolute right-[8%] top-[13%] h-[348px] w-[278px] rotate-[14deg] border border-[#d7d0bd] bg-[#efe6d1] shadow-[15px_17px_0_#d7b38233] md:right-[19%]" />
         <div className="absolute right-[15%] top-[19%] h-[348px] w-[278px] rotate-[7deg] border border-[#d7d0bd] bg-[#fbfaf2] p-[22px] shadow-[15px_17px_0_#d7b38233] md:right-[25%]">
           <div className="flex justify-between text-[7px] font-bold tracking-[.13em] text-[#d78d50]">
-            <span>AI STUDENT ASSIST</span>
+            <span>STUDYZEN</span>
             <span>●●●</span>
           </div>
           <div className="mt-[63px] font-serif text-[34px] leading-[.94] tracking-[-.06em]">
@@ -227,9 +227,9 @@ const Landing = () => (
         className="flex items-center gap-2 text-[17px] font-bold tracking-[-.04em] text-[#18221f]"
       >
         <span className="grid h-7 w-7 place-items-center rounded-full bg-[#f4a248] text-white">
-          a/
+          S/
         </span>
-        <span>assist</span>
+        <span>StudyZen</span>
       </Link>
       <span>Built for the next thing you&apos;ll understand.</span>
       <Link to="/signup" className="font-bold text-[#304039]">

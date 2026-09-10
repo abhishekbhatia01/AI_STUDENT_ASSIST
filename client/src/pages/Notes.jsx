@@ -161,7 +161,7 @@ const Notes = () => {
               </form>
             </section>
 
-            <section className="min-h-[540px] rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] p-6 shadow-[0_18px_50px_rgba(67,80,68,0.08)] sm:p-8">
+            <section className="min-h-135 rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] p-6 shadow-[0_18px_50px_rgba(67,80,68,0.08)] sm:p-8">
               <div className="mb-6 flex items-start justify-between gap-4">
                 <div>
                   <p className="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-[#e9914d]">
@@ -171,7 +171,7 @@ const Notes = () => {
                     Generated notes
                   </h2>
                   {generatedNotes?.originalFileName && (
-                    <p className="mt-1 max-w-[30rem] truncate text-sm text-[#68736c]">
+                    <p className="mt-1 max-w-120 truncate text-sm text-[#68736c]">
                       {generatedNotes.originalFileName}
                     </p>
                   )}
@@ -185,7 +185,7 @@ const Notes = () => {
 
               {generatedNotes ? (
                 <>
-                  <div className="max-h-[650px] overflow-y-auto rounded-[3px] border border-[#d7dcd3] bg-[#f5f4ed] p-5 sm:p-8">
+                  <div className="max-h-162.5 overflow-y-auto rounded-[3px] border border-[#d7dcd3] bg-[#f5f4ed] p-5 sm:p-8">
                     <article className="prose prose-indigo max-w-none">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {generatedNotes.aiResponse}
@@ -202,7 +202,7 @@ const Notes = () => {
                   </button>
                 </>
               ) : (
-                <div className="flex min-h-[400px] flex-col items-center justify-center rounded-[3px] border border-dashed border-[#c9cec5] bg-[#f5f4ed] px-6 text-center">
+                <div className="flex min-h-100 flex-col items-center justify-center rounded-[3px] border border-dashed border-[#c9cec5] bg-[#f5f4ed] px-6 text-center">
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#f8dfc5] text-2xl text-[#d4773d] shadow-sm">
                     ◌
                   </div>

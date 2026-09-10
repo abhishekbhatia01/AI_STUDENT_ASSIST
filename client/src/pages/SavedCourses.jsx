@@ -127,9 +127,9 @@ const SavedCourses = () => {
                 return (
                   <article
                     key={course.id}
-                    className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.07)]"
+                    className="overflow-hidden rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] shadow-[0_16px_40px_rgba(67,80,68,0.07)]"
                   >
-                    <div className="border-b border-slate-100 bg-gradient-to-br from-indigo-50 via-white to-emerald-50 p-6">
+                    <div className="border-b border-[#e5e9df] bg-linear-to-br from-[#fff7ec] via-[#fffef8] to-[#e7ede0] p-6">
                       <div className="mb-8 flex items-start justify-between gap-3">
                         <span className="rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-indigo-700 shadow-sm">
                           {course.fileType || "notes"}

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-family: "Aptos", "Segoe UI", sans-serif;
   font-synthesis: none;
 }
 
@@ -11,4 +11,104 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+}
+
+:root {
+  color: #12263a;
+  background: #eef6fb;
+}
+
+body {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), transparent 42%), #eef6fb;
+  color: #12263a;
+}
+
+@layer utilities {
+  .bg-\[\#f5f4ed\] {
+    background-color: #eef6fb;
+  }
+  .bg-\[\#fffef8\] {
+    background-color: #ffffff;
+  }
+  .bg-\[\#e7ede0\] {
+    background-color: #dceff4;
+  }
+  .bg-\[\#f8dfc5\] {
+    background-color: #ffd9cf;
+  }
+  .bg-\[\#fff7ec\] {
+    background-color: #fff1ed;
+  }
+  .bg-\[\#e9914d\],
+  .bg-\[\#f4a248\] {
+    background-color: #ef6f61;
+  }
+  .bg-\[\#1b2925\] {
+    background-color: #12263a;
+  }
+  .hover\:bg-\[\#2c403a\]:hover {
+    background-color: #1d4964;
+  }
+  .text-\[\#18221f\],
+  .text-\[\#1b2925\] {
+    color: #12263a;
+  }
+  .text-\[\#304039\] {
+    color: #29465a;
+  }
+  .text-\[\#68736c\] {
+    color: #557080;
+  }
+  .text-\[\#87908a\],
+  .text-\[\#a0a9a0\] {
+    color: #7892a1;
+  }
+  .text-\[\#e9914d\],
+  .text-\[\#ef9450\],
+  .text-\[\#d4773d\] {
+    color: #ef6f61;
+  }
+  .text-\[\#f2b16d\] {
+    color: #ffd0a6;
+  }
+  .border-\[\#d7dcd3\],
+  .border-\[\#c9cec5\],
+  .border-\[\#e5e9df\] {
+    border-color: #c8dce6;
+  }
+  .border-\[\#aeb9ae\],
+  .border-\[\#b6bcb5\] {
+    border-color: #9db8c6;
+  }
+  .border-\[\#efc18e\] {
+    border-color: #f3a49a;
+  }
+  .border-\[\#e4e5d9\] {
+    border-color: #d3e4eb;
+  }
+  .hover\:border-\[\#e9914d\]:hover,
+  .focus\:border-\[\#e9914d\]:focus {
+    border-color: #ef6f61;
+  }
+  .hover\:text-\[\#18221f\]:hover,
+  .hover\:text-\[\#1b2925\]:hover {
+    color: #12263a;
+  }
+  .hover\:text-\[\#d4773d\]:hover,
+  .hover\:text-\[\#b45b2b\]:hover {
+    color: #c9554d;
+  }
+  .focus\:ring-\[\#e9914d\]\/10:focus {
+    --tw-ring-color: rgb(239 111 97 / 0.1);
+  }
+  .focus\:ring-\[\#e9914d\]\/20:focus {
+    --tw-ring-color: rgb(239 111 97 / 0.2);
+  }
+  .text-\[\#557b5f\] {
+    color: #287277;
+  }
+  .bg-\[\#e3eee4\] {
+    background-color: #d8f0ec;
+  }
 }
