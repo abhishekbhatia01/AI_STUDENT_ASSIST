@@ -9,7 +9,7 @@ const seedAdmin = async () => {
     console.log("Database connected.");
 
     const existingAdmin = await User.findOne({
-      where: {
+      where: {d
         email: "admin@aistudentassistant.com",
       },
     });
