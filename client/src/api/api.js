@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://13.51.66.224:5000/api",
+    baseURL: "https://www.studyzen.me/api",
     withCredentials: true,
 });
 
