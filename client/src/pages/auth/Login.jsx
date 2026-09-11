@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginThunk, clearError } from "../../store/authSlice/authSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const Login = () => {
       toast.success("Login successful!");
 
       // Uncomment when dashboard route is ready
-      // navigate("/dashboard");
+      navigate("/dashboard");
     } catch (error) {
       console.log("Login failed:", error);
 
