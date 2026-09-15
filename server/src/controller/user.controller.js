@@ -52,9 +52,18 @@ export const login = asyncHandler(async (req, res) => {
   });
 });
 
-export const getMe = asyncHandler(async (req, res)=>{
+export const logout = asyncHandler(async (req, res) => {
+  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken");
+
+  res.status(200).json({
+    message: "User logged out successfully",
+  });
+});
+
+export const getMe = asyncHandler(async (req, res) => {
   const user = await authService.getMe(req.user.id);
   res.status(200).json({
-    user
+    user,
   });
 });

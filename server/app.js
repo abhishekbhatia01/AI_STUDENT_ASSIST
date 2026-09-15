@@ -13,8 +13,6 @@ import notesRoutes from "./src/routers/notes.routes.js";
 import cors from "cors";
 
 const app = express();
-app.use(express.json());
-app.use(coockieParser());
 app.use(express.static("public"));
 
 const allowedOrigins = [
@@ -36,6 +34,9 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use(express.json());
+app.use(coockieParser());
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");

@@ -7,14 +7,14 @@ import {
   analyzePpt,
 } from "../utils/text-file.utils.js";
 import { notes_prompt } from "../utils/prompt.utils.js";
- 
+
 const ai = new GoogleGenAI({
   apiKey: GEMINI_API_KEY,
 });
 
 export const generateAiResponse = async (file, prompt, userId) => {
-  let extractedText;
-  let fileType;
+  let extractedText = prompt || "";
+  let fileType = "text";
   let originalFileName = null;
 
   if (file) {
@@ -38,9 +38,6 @@ export const generateAiResponse = async (file, prompt, userId) => {
     ) {
       extractedText = await analyzePpt(file);
       fileType = "pptx";
-    } else {
-      extractedText = prompt;
-      fileType = "text";
     }
   }
 

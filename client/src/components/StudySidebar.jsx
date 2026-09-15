@@ -1,4 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout as clearAuth } from "../store/authSlice/authSlice";
+import { logout } from "../api/auth/authApi";
 
 const navigation = [
   { label: "Dashboard", path: "/dashboard", icon: "⌂" },
@@ -8,6 +12,21 @@ const navigation = [
 
 const StudySidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+
+    try {
+      await logout();
+    } finally {
+      dispatch(clearAuth());
+      navigate("/login", { replace: true });
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <aside className="w-full shrink-0 border-b border-[#d7dcd3] bg-[#fffef8] lg:sticky lg:top-0 lg:h-screen lg:w-64 lg:border-b-0 lg:border-r">
@@ -45,7 +64,7 @@ const StudySidebar = () => {
           })}
         </div>
 
-        <div className="mt-auto hidden border-t border-[#d7dcd3] pt-5 lg:block">
+        <div className="mt-8 border-t border-[#d7dcd3] pt-5 lg:mt-auto">
           <p className="mb-3 text-[10px] leading-4 text-[#87908a]">
             Make space for better thinking.
           </p>
@@ -55,6 +74,14 @@ const StudySidebar = () => {
           >
             Back to home ↗
           </Link>
+          <button
+            type="button"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="mt-5 block text-xs font-bold text-[#68736c] transition hover:text-[#1b2925] disabled:cursor-wait disabled:opacity-50"
+          >
+            {isLoggingOut ? "Logging out..." : "Log out ↗"}
+          </button>
         </div>
       </div>
     </aside>

@@ -23,6 +23,11 @@ export const login = async (email, password) => {
   return response.data;
 };
 
+export const logout = async () => {
+  const response = await api.post("/logout");
+  return response.data;
+};
+
 export const getMe = async () => {
   const response = await api.get("/getMe");
   return response.data;

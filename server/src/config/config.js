@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import e from "express";
 dotenv.config();
 
 export const PORT = process.env.PORT || 5000;
@@ -14,6 +15,22 @@ export const DATABASE_DIALECT = process.env.DATABASE_DIALECT;
 export const DATABASE_PORT = process.env.DATABASE_PORT;
 export const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 export const DATABASE_URL = process.env.DATABASE_URL;
+export const IMAGEKIT_PRIVATE_KEY = process.env.IMAGEKIT_PRIVATE_KEY;
+export const IMAGEKIT_PUBLIC_KEY = process.env.IMAGEKIT_PUBLIC_KEY;
+export const IMAGEKIT_URL_ENDPOINT = process.env.IMAGEKIT_URL_ENDPOINT;
+
+
+if(!IMAGEKIT_PRIVATE_KEY){
+    throw new Error("IMAGEKIT_PRIVATE_KEY is not defined in the environment variables");
+}
+
+if(!IMAGEKIT_PUBLIC_KEY){
+    throw new Error("IMAGEKIT_PUBLIC_KEY is not defined in the environment variables");
+}
+
+if(!IMAGEKIT_URL_ENDPOINT){
+    throw new Error("IMAGEKIT_URL_ENDPOINT is not defined in the environment variables");
+}
 
 if(!GEMINI_API_KEY){
     throw new Error("GEMINI_API_KEY is not defined in the environment variables");

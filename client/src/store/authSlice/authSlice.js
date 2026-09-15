@@ -4,7 +4,7 @@ import { login, getMe } from "../../api/auth/authApi.js";
 const initialState = {
   user: null,
   isAuthenticated: false,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -16,22 +16,28 @@ const authSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+
     setUser: (state, action) => {
       state.user = action.payload;
-      state.isAuthenticated = true;
+      state.isAuthenticated = Boolean(action.payload);
       state.loading = false;
       state.error = null;
     },
+
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
     },
+
     setError: (state, action) => {
       state.error = action.payload;
+      state.user = null;
+      state.isAuthenticated = false;
       state.loading = false;
     },
+
     clearError: (state) => {
       state.error = null;
     },
@@ -43,15 +49,24 @@ export const loginThunk = (userData) => {
     dispatch(setLoading(true));
 
     try {
-      const response = await login(userData.email, userData.password);
-      dispatch(setUser(response.userWithoutToken));
+      const response = await login(
+        userData.email,
+        userData.password
+      );
+
+      console.log("Login response:", response);
+
+      const user = response.userWithoutToken.user;
+
+      dispatch(setUser(user));
+
       return response;
     } catch (error) {
-      dispatch(
-        setError(
-          error.response?.data?.message || "An error occurred during login.",
-        ),
-      );
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred during login.";
+
+      dispatch(setError(errorMessage));
 
       throw error;
     } finally {
@@ -65,30 +80,55 @@ export const getMeThunk = () => {
     dispatch(setLoading(true));
 
     try {
+      console.log("getMe request started");
+
       const response = await getMe();
+
+      console.log("getMe response:", response);
+
       dispatch(setUser(response.user));
-      return response;
+
+      console.log("setUser dispatched");
+
+      return response.user;
     } catch (error) {
-      dispatch(
-        setError(
-          error.response?.data?.message ||
-            "An error occurred while fetching user data.",
-        ),
+      const status = error.response?.status;
+
+      console.log(
+        "getMe failed:",
+        error.response?.data || error.message
       );
 
-      throw error;
+      /*
+       * 401 means the user is not logged in.
+       * This is normal for a new user.
+       * Do not store it as a visible error.
+       */
+      if (status === 401) {
+        dispatch(logout());
+        return null;
+      }
+
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred while fetching user data.";
+
+      dispatch(setError(errorMessage));
+
+      return null;
     } finally {
       dispatch(setLoading(false));
+      console.log("getMe loading finished");
     }
   };
 };
 
-export const { 
-    setLoading, 
-    setUser,  
-    logout, 
-    setError, 
-    clearError 
+export const {
+  setLoading,
+  setUser,
+  logout,
+  setError,
+  clearError,
 } = authSlice.actions;
 
 export default authSlice.reducer;

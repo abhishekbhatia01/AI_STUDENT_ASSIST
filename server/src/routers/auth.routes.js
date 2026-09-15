@@ -26,6 +26,7 @@ router.post(
   authController.resendOTP,
 );
 router.post("/login", validateRequest(loginSchema), authController.login);
+router.post("/logout", authController.logout);
 router.get("/getMe", authMiddleware, authController.getMe);
 
 export default router;

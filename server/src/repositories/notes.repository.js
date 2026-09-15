@@ -3,11 +3,21 @@ import Note from "../model/notes.model.js";
 export const saveNotes = async (notesData, userId) => {
   return Note.create({
     userId,
+
     title: notesData.title || "AI Generated Notes",
+
     originalFileName: notesData.originalFileName,
+
     fileType: notesData.fileType,
+
+    fileUrl: notesData.fileUrl,
+
+    fileId: notesData.fileId,
+
     extractedText: notesData.extractedText,
+
     prompt: notesData.prompt,
+
     aiResponse: notesData.aiResponse,
   });
 };
