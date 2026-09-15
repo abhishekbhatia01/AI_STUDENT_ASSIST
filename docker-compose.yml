@@ -5,7 +5,7 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - /opt/studyzen/server.env
+      - /etc/studyzen/backend.env
     restart: unless-stopped
 
   frontend:
