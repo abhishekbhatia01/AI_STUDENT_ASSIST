@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { useNavigate } from "react-router-dom";
 import { getSavedNotes } from "../api/notes/notesApi";
 import StudySidebar from "../components/StudySidebar";
 
@@ -13,10 +12,10 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 const SavedCourses = () => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -122,14 +121,23 @@ const SavedCourses = () => {
           ) : (
             <section className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
               {filteredCourses.map((course) => {
-                const isExpanded = expandedId === course.id;
-
                 return (
                   <article
                     key={course.id}
                     className="overflow-hidden rounded-[3px] border border-[#d7dcd3] bg-[#fffef8] shadow-[0_16px_40px_rgba(67,80,68,0.07)]"
                   >
-                    <div className="border-b border-[#e5e9df] bg-linear-to-br from-[#fff7ec] via-[#fffef8] to-[#e7ede0] p-6">
+                    <div
+                      className="cursor-pointer border-b border-[#e5e9df] bg-linear-to-br from-[#fff7ec] via-[#fffef8] to-[#e7ede0] p-6 transition hover:bg-[#fff1e2]"
+                      onClick={() => navigate(`/notes/${course.id}`)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          navigate(`/notes/${course.id}`);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                    >
                       <div className="mb-8 flex items-start justify-between gap-3">
                         <span className="rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-indigo-700 shadow-sm">
                           {course.fileType || "notes"}
@@ -150,29 +158,18 @@ const SavedCourses = () => {
                       )}
                     </div>
 
-                    <div className="p-6">
-                      <p
-                        className={`text-sm leading-6 text-slate-600 ${isExpanded ? "" : "line-clamp-3"}`}
-                      >
+                    <div className="flex items-end justify-between gap-4 p-6">
+                      <p className="line-clamp-3 text-sm leading-6 text-slate-600">
                         {course.prompt ||
                           "A focused set of notes created from your study material."}
                       </p>
                       <button
                         type="button"
-                        onClick={() =>
-                          setExpandedId(isExpanded ? null : course.id)
-                        }
-                        className="mt-5 text-sm font-bold text-indigo-600 transition hover:text-indigo-800"
+                        onClick={() => navigate(`/notes/${course.id}`)}
+                        className="shrink-0 rounded-[3px] bg-[#1b2925] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#2c403a]"
                       >
-                        {isExpanded ? "Hide notes" : "Read notes"}
+                        View notes
                       </button>
-                      {isExpanded && (
-                        <div className="prose prose-sm prose-indigo mt-5 max-h-80 max-w-none overflow-y-auto border-t border-slate-100 pt-5">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {course.aiResponse || "No note content available."}
-                          </ReactMarkdown>
-                        </div>
-                      )}
                     </div>
                   </article>
                 );

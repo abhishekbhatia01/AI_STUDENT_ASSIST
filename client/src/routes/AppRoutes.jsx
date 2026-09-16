@@ -4,6 +4,7 @@ import VerifyOTP from "../pages/auth/VerifyOTP";
 import Login from "../pages/auth/Login";
 import Notes from "../pages/Notes";
 import SavedCourses from "../pages/SavedCourses";
+import NoteDetails from "../pages/NoteDetails";
 import Landing from "../pages/Landing";
 import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
@@ -22,6 +23,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/noteGenerate" element={<Notes />} />
         <Route path="/saved-courses" element={<SavedCourses />} />
+        <Route path="/notes/:noteId" element={<NoteDetails />} />
       </Route>
 
       {/* Fallback route */}

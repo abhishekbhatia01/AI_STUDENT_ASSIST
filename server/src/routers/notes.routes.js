@@ -5,6 +5,7 @@ import authMiddleware from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.get("/", authMiddleware, notesController.getSavedNotes);
+router.get("/:noteId", authMiddleware, notesController.getNoteById);
 
 router.post(
   "/save",

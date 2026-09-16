@@ -27,3 +27,7 @@ export const saveNotes = async (notesData, userId, file) => {
 export const getNotesByUser = async (userId) => {
   return notesRepository.getNotesByUser(userId);
 };
+
+export const getNoteById = async (userId, noteId) => {
+  return notesRepository.getNoteById(userId, noteId);
+};

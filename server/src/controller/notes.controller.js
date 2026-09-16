@@ -23,3 +23,19 @@ export const getSavedNotes = asyncHandler(async (req, res) => {
     data: notes,
   });
 });
+
+export const getNoteById = asyncHandler(async (req, res) => {
+  const note = await notesService.getNoteById(req.user.id, req.params.noteId);
+
+  if (!note) {
+    return res.status(404).json({
+      success: false,
+      message: "Note not found.",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: note,
+  });
+});

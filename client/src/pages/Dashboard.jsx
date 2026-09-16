@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import StudySidebar from "../components/StudySidebar";
+import AdminDashboard from "./AdminDashboard";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.auth.user);
+
+  if (user?.role === "admin") {
+    return <AdminDashboard />;
+  }
+
   const firstName = user?.fullname?.split(" ")[0] || "there";
 
   return (

@@ -14,6 +14,8 @@ export const saveNotes = async (notesData, userId) => {
 
     fileId: notesData.fileId,
 
+    outputType: notesData.outputType,
+
     extractedText: notesData.extractedText,
 
     prompt: notesData.prompt,
@@ -26,5 +28,14 @@ export const getNotesByUser = async (userId) => {
   return Note.findAll({
     where: { userId },
     order: [["createdAt", "DESC"]],
+  });
+};
+
+export const getNoteById = async (userId, noteId) => {
+  return Note.findOne({
+    where: {
+      id: noteId,
+      userId,
+    },
   });
 };

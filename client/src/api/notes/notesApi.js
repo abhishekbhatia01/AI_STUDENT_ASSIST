@@ -19,3 +19,8 @@ export const getSavedNotes = async () => {
   const response = await api.get("/notes");
   return response.data;
 };
+
+export const getNoteById = async (noteId) => {
+  const response = await api.get(`/notes/${noteId}`);
+  return response.data;
+};

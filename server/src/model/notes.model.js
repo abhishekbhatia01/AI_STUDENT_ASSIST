@@ -25,8 +25,23 @@ const Note = sequelize.define(
       allowNull: true,
     },
 
+    fileUrl: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+
+    fileId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
     fileType: {
       type: DataTypes.ENUM("image", "pdf", "docx", "pptx", "text"),
+      allowNull: true,
+    },
+
+    outputType: {
+      type: DataTypes.ENUM("brief", "deep"),
       allowNull: true,
     },
 
