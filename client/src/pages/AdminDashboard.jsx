@@ -1,14 +1,67 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { logout as clearAuth } from "../store/authSlice/authSlice";
 import { logout } from "../api/auth/authApi";
+import { deleteUser, getAllUsers, setUserBlocked } from "../api/admin/adminApi";
 
 const AdminDashboard = () => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(true);
+  const [actionId, setActionId] = useState(null);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const response = await getAllUsers();
+        setUsers(response.users || []);
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Unable to load users.");
+      } finally {
+        setIsLoadingUsers(false);
+      }
+    };
+
+    loadUsers();
+  }, []);
+
+  const handleBlock = async (listedUser) => {
+    setActionId(listedUser.id);
+
+    try {
+      await setUserBlocked(listedUser.id, !listedUser.isBlocked);
+      toast.success(listedUser.isBlocked ? "User unblocked." : "User blocked.");
+      const response = await getAllUsers();
+      setUsers(response.users || []);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unable to update user.");
+    } finally {
+      setActionId(null);
+    }
+  };
+
+  const handleDelete = async (listedUser) => {
+    if (!window.confirm(`Delete ${listedUser.fullname}'s account?`)) return;
+
+    setActionId(listedUser.id);
+
+    try {
+      await deleteUser(listedUser.id);
+      setUsers((currentUsers) =>
+        currentUsers.filter((currentUser) => currentUser.id !== listedUser.id),
+      );
+      toast.success("User deleted.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unable to delete user.");
+    } finally {
+      setActionId(null);
+    }
+  };
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -41,6 +94,13 @@ const AdminDashboard = () => {
               <span className="mr-3 text-[#ffd0a6]">▦</span>
               Overview
             </div>
+            <Link
+              to="/admin/users"
+              className="mt-2 block rounded px-3 py-3 text-sm font-bold text-[#c8dce6] transition hover:bg-[#1d4964] hover:text-white"
+            >
+              <span className="mr-3 text-[#ffd0a6]">◎</span>
+              Users
+            </Link>
           </div>
 
           <div className="mt-auto border-t border-[#29465a] pt-5">
@@ -153,17 +213,69 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            <div className="bg-[#29465a] p-6 text-white sm:p-8">
-              <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#ffd0a6]">
-                Admin account
-              </p>
-              <h2 className="mt-12 font-serif text-3xl font-normal leading-tight">
-                Keep the learning workspace healthy.
-              </h2>
-              <p className="mt-4 text-sm leading-6 text-[#c8dce6]">
-                Administrative controls and reporting can be added here as the
-                platform grows.
-              </p>
+            <div className="border border-[#c8d4dc] bg-white p-6 shadow-[0_18px_45px_rgba(38,66,84,0.06)] sm:p-8">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#ef6f61]">
+                    Directory
+                  </p>
+                  <h2 className="mt-3 text-2xl font-bold text-[#12263a]">
+                    All users
+                  </h2>
+                </div>
+                <span className="text-2xl font-bold text-[#29465a]">
+                  {users.length}
+                </span>
+              </div>
+
+              {isLoadingUsers ? (
+                <p className="mt-7 text-sm text-[#7892a1]">Loading users...</p>
+              ) : users.length === 0 ? (
+                <p className="mt-7 text-sm text-[#7892a1]">No users found.</p>
+              ) : (
+                <div className="mt-7 divide-y divide-[#e1e8ec]">
+                  {users.map((listedUser) => (
+                    <div
+                      key={listedUser.id}
+                      className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-bold text-[#12263a]">
+                          {listedUser.fullname}
+                        </p>
+                        <p className="truncate text-xs text-[#7892a1]">
+                          {listedUser.email}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="shrink-0 rounded-full bg-[#e2f2ef] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#287277]">
+                          {listedUser.isBlocked ? "Blocked" : listedUser.role}
+                        </span>
+                        {listedUser.id !== user?.id && (
+                          <>
+                            <button
+                              type="button"
+                              disabled={actionId === listedUser.id}
+                              onClick={() => handleBlock(listedUser)}
+                              className="border border-[#29465a] px-3 py-2 text-xs font-bold text-[#29465a] transition hover:bg-[#edf2f5] disabled:cursor-wait disabled:opacity-50"
+                            >
+                              {listedUser.isBlocked ? "Unblock" : "Block"}
+                            </button>
+                            <button
+                              type="button"
+                              disabled={actionId === listedUser.id}
+                              onClick={() => handleDelete(listedUser)}
+                              className="border border-[#ef6f61] px-3 py-2 text-xs font-bold text-[#c65045] transition hover:bg-[#fff0ed] disabled:cursor-wait disabled:opacity-50"
+                            >
+                              Delete
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         </div>

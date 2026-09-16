@@ -7,6 +7,7 @@ import { logout } from "../api/auth/authApi";
 const navigation = [
   { label: "Dashboard", path: "/dashboard", icon: "⌂" },
   { label: "Generate notes", path: "/noteGenerate", icon: "✦" },
+  { label: "Quizzes", path: "/quizzes", icon: "?" },
   { label: "Saved courses", path: "/saved-courses", icon: "⌁" },
 ];
 

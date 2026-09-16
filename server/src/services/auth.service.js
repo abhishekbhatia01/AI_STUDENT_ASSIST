@@ -12,11 +12,7 @@ import {
   generateRefreshToken,
 } from "../utils/jwt.utils.js";
 
-export const registerUser = async ({
-  fullname,
-  email,
-  password,
-}) => {
+export const registerUser = async ({ fullname, email, password }) => {
   const existingUser = await userRepository.findUserByEmail(email);
 
   if (existingUser) {
@@ -123,6 +119,10 @@ export const loginUser = async (email, password) => {
 
   if (!user) {
     throw new AppErrors("User not found", 404);
+  }
+
+  if (user.isBlocked) {
+    throw new AppErrors("This account has been blocked", 403);
   }
 
   if (!user.isVerified) {

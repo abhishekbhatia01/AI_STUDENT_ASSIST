@@ -8,6 +8,12 @@ import NoteDetails from "../pages/NoteDetails";
 import Landing from "../pages/Landing";
 import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
+import AdminUsers from "../pages/AdminUsers";
+import BlockedAccount from "../pages/auth/BlockedAccount";
+import Quiz from "../pages/Quiz";
+import Quizzes from "../pages/Quizzes";
+import QuizSetup from "../pages/QuizSetup";
+import QuizAttemptQuestions from "../pages/QuizAttemptQuestions";
 
 function AppRoutes() {
   return (
@@ -17,13 +23,22 @@ function AppRoutes() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/verify-otp" element={<VerifyOTP />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/blocked" element={<BlockedAccount />} />
 
       {/* Protected routes */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/noteGenerate" element={<Notes />} />
         <Route path="/saved-courses" element={<SavedCourses />} />
+        <Route path="/quizzes" element={<Quizzes />} />
+        <Route path="/quizzes/:noteId" element={<QuizSetup />} />
+        <Route
+          path="/quiz-attempts/:attemptId/questions"
+          element={<QuizAttemptQuestions />}
+        />
         <Route path="/notes/:noteId" element={<NoteDetails />} />
+        <Route path="/notes/:noteId/quiz" element={<Quiz />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
       </Route>
 
       {/* Fallback route */}

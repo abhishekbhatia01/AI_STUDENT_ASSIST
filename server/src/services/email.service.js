@@ -22,7 +22,7 @@ transporter.verify((error, success) => {
 export const sendEmail = async (to, subject, text, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `StudyZen <no-reply@studyzen.me>`,
+      from: "StudyZen <no-reply@studyzen.me>",
       to,
       subject,
       text,

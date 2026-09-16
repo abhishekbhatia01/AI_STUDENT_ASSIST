@@ -41,6 +41,11 @@ const Login = () => {
     } catch (error) {
       console.log("Login failed:", error);
 
+      if (error.response?.status === 403) {
+        navigate("/blocked", { state: { email: formData.email } });
+        return;
+      }
+
       toast.error(
         error.response?.data?.message || "An error occurred during login.",
       );

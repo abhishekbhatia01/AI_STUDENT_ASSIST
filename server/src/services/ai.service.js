@@ -7,6 +7,7 @@ import {
   analyzePpt,
 } from "../utils/text-file.utils.js";
 import { notes_prompt } from "../utils/prompt.utils.js";
+import { quiz_prompt } from "../utils/quiz-prompt.utils.js";
 
 const ai = new GoogleGenAI({
   apiKey: GEMINI_API_KEY,
@@ -58,4 +59,49 @@ export const generateAiResponse = async (file, prompt, userId) => {
     prompt,
     aiResponse,
   };
+};
+
+export const generateQuiz = async (notes, difficulty) => {
+  const response = await ai.models.generateContent({
+    model: "gemini-3.1-flash-lite",
+    contents: quiz_prompt(notes, difficulty),
+    config: {
+      responseMimeType: "application/json",
+    },
+  });
+
+  const rawQuiz = response.candidates?.[0]?.content?.parts?.[0]?.text
+    ?.replace(/^```(?:json)?\s*/i, "")
+    ?.replace(/\s*```$/i, "")
+    ?.trim();
+
+  if (!rawQuiz) {
+    throw new Error("The AI returned an empty quiz format");
+  }
+
+  let quiz;
+  try {
+    quiz = JSON.parse(rawQuiz);
+  } catch {
+    throw new Error("The AI returned an invalid quiz format");
+  }
+
+  if (
+    !Array.isArray(quiz.questions) ||
+    quiz.questions.length !== 10 ||
+    quiz.questions.some(
+      (question) =>
+        typeof question.question !== "string" ||
+        !Array.isArray(question.options) ||
+        question.options.length !== 4 ||
+        !Number.isInteger(question.answer) ||
+        question.answer < 0 ||
+        question.answer >= question.options.length ||
+        typeof question.explanation !== "string",
+    )
+  ) {
+    throw new Error("The AI returned an invalid quiz format");
+  }
+
+  return quiz;
 };

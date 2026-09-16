@@ -10,7 +10,12 @@ import authMiddleware from "./src/middlewares/auth.middleware.js";
 import authorizedRole from "./src/middlewares/roleMiddleware.js";
 import aiRoutes from "./src/routers/ai.routes.js";
 import notesRoutes from "./src/routers/notes.routes.js";
+import adminRoutes from "./src/routers/admin.routes.js";
+import unblockRequestRoutes from "./src/routers/unblockRequest.routes.js";
+import quizAttemptRoutes from "./src/routers/quizAttempt.routes.js";
 import cors from "cors";
+import "./src/model/unblockRequest.js";
+import "./src/model/quizAttempt.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -57,6 +62,9 @@ app.use("/api", userRoutes);
 app.use("/api", refreshTokenRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/notes", notesRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api", unblockRequestRoutes);
+app.use("/api/quiz-attempts", quizAttemptRoutes);
 
 app.use((req, res, next) => {
   next(new AppErrors(`Can't find ${req.originalUrl} on this server!`, 404));

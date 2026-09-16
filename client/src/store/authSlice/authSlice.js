@@ -49,10 +49,7 @@ export const loginThunk = (userData) => {
     dispatch(setLoading(true));
 
     try {
-      const response = await login(
-        userData.email,
-        userData.password
-      );
+      const response = await login(userData.email, userData.password);
 
       console.log("Login response:", response);
 
@@ -63,10 +60,13 @@ export const loginThunk = (userData) => {
       return response;
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred during login.";
+        error.response?.data?.message || "An error occurred during login.";
 
-      dispatch(setError(errorMessage));
+      if (error.response?.status !== 403) {
+        dispatch(setError(errorMessage));
+      } else {
+        dispatch(clearError());
+      }
 
       throw error;
     } finally {
@@ -94,10 +94,7 @@ export const getMeThunk = () => {
     } catch (error) {
       const status = error.response?.status;
 
-      console.log(
-        "getMe failed:",
-        error.response?.data || error.message
-      );
+      console.log("getMe failed:", error.response?.data || error.message);
 
       /*
        * 401 means the user is not logged in.
@@ -123,12 +120,7 @@ export const getMeThunk = () => {
   };
 };
 
-export const {
-  setLoading,
-  setUser,
-  logout,
-  setError,
-  clearError,
-} = authSlice.actions;
+export const { setLoading, setUser, logout, setError, clearError } =
+  authSlice.actions;
 
 export default authSlice.reducer;

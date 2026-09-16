@@ -1,5 +1,5 @@
 import express from "express";
-import { generateResponse } from "../controller/ai.controller.js";
+import { generateResponse, generateQuizResponse } from "../controller/ai.controller.js";
 import upload from "../middlewares/multer.middleware.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 
@@ -11,5 +11,7 @@ router.post(
   upload.single("file"),
   generateResponse,
 );
+
+router.post("/quiz", authMiddleware, generateQuizResponse);
 
 export default router;

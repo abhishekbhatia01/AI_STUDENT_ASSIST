@@ -77,82 +77,86 @@ const NoteDetails = () => {
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f4ed] px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="inline-flex items-center rounded-[3px] border border-[#d7dcd3] bg-white px-4 py-2 text-sm font-semibold text-[#1b2925] transition hover:border-[#b7c3bc]"
-          >
-            ← Back
-          </button>
-
-          <div className="flex flex-wrap gap-3">
+    <>
+      <main className="min-h-screen bg-[#f5f4ed] px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="button"
-              onClick={() => navigate("/noteGenerate")}
-              className="inline-flex items-center rounded-[3px] border border-[#ef6f61] bg-white px-4 py-2 text-sm font-bold text-[#c9554d] transition hover:bg-[#fff1ed]"
+              onClick={() => navigate(-1)}
+              className="inline-flex items-center rounded-[3px] border border-[#d7dcd3] bg-white px-4 py-2 text-sm font-semibold text-[#1b2925] transition hover:border-[#b7c3bc]"
             >
-              Generate quiz
+              ← Back
             </button>
 
-            {note.fileUrl && (
-              <a
-                href={note.fileUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-[3px] bg-[#1b2925] px-4 py-2 text-sm font-bold text-white shadow-lg shadow-[#1b2925]/15 transition hover:bg-[#2c403a]"
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => navigate(`/quizzes/${noteId}`)}
+                className="inline-flex items-center rounded-[3px] border border-[#ef6f61] bg-white px-4 py-2 text-sm font-bold text-[#c9554d] transition hover:bg-[#fff1ed]"
               >
-                Download file
-              </a>
-            )}
-          </div>
-        </div>
+                Take quiz
+              </button>
 
-        <article className="overflow-hidden rounded-xl border border-[#d7dcd3] bg-white shadow-[0_16px_40px_rgba(67,80,68,0.07)]">
-          <header className="border-b border-[#e5e9df] bg-[#fffef8] p-6 sm:p-8">
-            <div className="mb-4 flex flex-wrap items-center gap-3">
-              <span className="rounded-full bg-[#f8dfc5] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#a65a25]">
-                {note.fileType || "notes"}
-              </span>
-              <span className="text-xs font-medium text-[#68736c]">
-                {note.createdAt ? formatDate(note.createdAt) : "Recently saved"}
-              </span>
+              {note.fileUrl && (
+                <a
+                  href={note.fileUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center rounded-[3px] bg-[#1b2925] px-4 py-2 text-sm font-bold text-white shadow-lg shadow-[#1b2925]/15 transition hover:bg-[#2c403a]"
+                >
+                  Download file
+                </a>
+              )}
             </div>
-
-            <h1 className="font-serif text-3xl font-normal tracking-[-.04em] text-[#1b2925] sm:text-4xl">
-              {note.title || "AI Generated Notes"}
-            </h1>
-
-            {(note.originalFileName || note.prompt) && (
-              <div className="mt-4 space-y-2 text-sm text-[#68736c]">
-                {note.originalFileName && (
-                  <p>
-                    <span className="font-semibold text-[#1b2925]">
-                      Source:
-                    </span>{" "}
-                    {note.originalFileName}
-                  </p>
-                )}
-                {note.prompt && (
-                  <p>
-                    <span className="font-semibold text-[#1b2925]">
-                      Prompt:
-                    </span>{" "}
-                    {note.prompt}
-                  </p>
-                )}
-              </div>
-            )}
-          </header>
-
-          <div className="p-6 sm:p-8">
-            <NotesContent content={note.aiResponse} />
           </div>
-        </article>
-      </div>
-    </main>
+
+          <article className="overflow-hidden rounded-xl border border-[#d7dcd3] bg-white shadow-[0_16px_40px_rgba(67,80,68,0.07)]">
+            <header className="border-b border-[#e5e9df] bg-[#fffef8] p-6 sm:p-8">
+              <div className="mb-4 flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-[#f8dfc5] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#a65a25]">
+                  {note.fileType || "notes"}
+                </span>
+                <span className="text-xs font-medium text-[#68736c]">
+                  {note.createdAt
+                    ? formatDate(note.createdAt)
+                    : "Recently saved"}
+                </span>
+              </div>
+
+              <h1 className="font-serif text-3xl font-normal tracking-[-.04em] text-[#1b2925] sm:text-4xl">
+                {note.title || "AI Generated Notes"}
+              </h1>
+
+              {(note.originalFileName || note.prompt) && (
+                <div className="mt-4 space-y-2 text-sm text-[#68736c]">
+                  {note.originalFileName && (
+                    <p>
+                      <span className="font-semibold text-[#1b2925]">
+                        Source:
+                      </span>{" "}
+                      {note.originalFileName}
+                    </p>
+                  )}
+                  {note.prompt && (
+                    <p>
+                      <span className="font-semibold text-[#1b2925]">
+                        Prompt:
+                      </span>{" "}
+                      {note.prompt}
+                    </p>
+                  )}
+                </div>
+              )}
+            </header>
+
+            <div className="p-6 sm:p-8">
+              <NotesContent content={note.aiResponse} />
+            </div>
+          </article>
+        </div>
+      </main>
+    </>
   );
 };
 
