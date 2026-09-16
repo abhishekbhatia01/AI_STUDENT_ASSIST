@@ -22,13 +22,13 @@ transporter.verify((error, success) => {
 export const sendEmail = async (to, subject, text, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `AI Notes Assistant <${GOOGLE_USER}>`,
+      from: `StudyZen <no-reply@studyzen.me>`,
       to,
       subject,
       text,
       html,
     });
-    
+
     console.log("Email sent: " + info.messageId);
     console.log("Preview URL: " + nodemailer.getTestMessageUrl(info));
   } catch (error) {
