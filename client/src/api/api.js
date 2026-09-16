@@ -1,21 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "www.studyzen.me/api",
+  baseURL: "https://www.studyzen.me/api",
   withCredentials: true,
 });
 
 api.interceptors.request.use(
   (config) => {
-    console.log(
-      "Request:",
-      config.method?.toUpperCase(),
-      config.url
-    );
+    console.log("Request:", config.method?.toUpperCase(), config.url);
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 api.interceptors.response.use(
@@ -24,15 +20,10 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    const excludedRoutes = [
-      "/login",
-      "/register",
-      "/refresh-token",
-      "/getMe",
-    ];
+    const excludedRoutes = ["/login", "/register", "/refresh-token", "/getMe"];
 
     const isExcludedRoute = excludedRoutes.some((route) =>
-      originalRequest?.url?.includes(route)
+      originalRequest?.url?.includes(route),
     );
 
     if (
@@ -53,7 +44,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;
