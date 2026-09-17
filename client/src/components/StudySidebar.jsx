@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout as clearAuth } from "../store/authSlice/authSlice";
 import { logout } from "../api/auth/authApi";
 
 const navigation = [
   { label: "Dashboard", path: "/dashboard", icon: "⌂" },
   { label: "Generate notes", path: "/noteGenerate", icon: "✦" },
-  { label: "Quizzes", path: "/quizzes", icon: "?" },
   { label: "Saved courses", path: "/saved-courses", icon: "⌁" },
+  { label: "Quizzes", path: "/quizzes", icon: "?" },
 ];
 
 const StudySidebar = () => {
+  const user = useSelector((state) => state.auth.user);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,6 +67,17 @@ const StudySidebar = () => {
         </div>
 
         <div className="mt-8 border-t border-[#d7dcd3] pt-5 lg:mt-auto">
+          <Link
+            to="/profile"
+            className="mb-5 block text-left text-xs font-bold text-[#1b2925] hover:text-[#d4773d]"
+          >
+            <span className="block truncate">
+              {user?.fullname || "Your profile"}
+            </span>
+            <span className="mt-1 block text-[10px] font-normal text-[#87908a]">
+              View profile
+            </span>
+          </Link>
           <p className="mb-3 text-[10px] leading-4 text-[#87908a]">
             Make space for better thinking.
           </p>

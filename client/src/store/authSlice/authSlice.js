@@ -50,22 +50,21 @@ export const loginThunk = (userData) => {
     dispatch(clearError());
 
     try {
-      const response = await login(
-        userData.email,
-        userData.password
-      );
+      const response = await login(userData.email, userData.password);
 
       console.log("Login response:", response);
 
-      const user = response.userWithoutToken.user;
+      const user =
+        response.userWithoutToken?.user ||
+        response.userWithoutToken ||
+        response.user;
 
       dispatch(setUser(user));
 
       return response;
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred during login.";
+        error.response?.data?.message || "An error occurred during login.";
 
       dispatch(setError(errorMessage));
 
@@ -98,10 +97,7 @@ export const getMeThunk = () => {
     } catch (error) {
       const status = error.response?.status;
 
-      console.log(
-        "getMe failed:",
-        error.response?.data || error.message
-      );
+      console.log("getMe failed:", error.response?.data || error.message);
 
       /*
        * User is not logged in.
@@ -128,12 +124,7 @@ export const getMeThunk = () => {
   };
 };
 
-export const {
-  setLoading,
-  setUser,
-  logout,
-  setError,
-  clearError,
-} = authSlice.actions;
+export const { setLoading, setUser, logout, setError, clearError } =
+  authSlice.actions;
 
 export default authSlice.reducer;

@@ -8,12 +8,14 @@ import NoteDetails from "../pages/NoteDetails";
 import Landing from "../pages/Landing";
 import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
+import GuestRoute from "../components/ProtectedRoute/GuestRoute";
 import AdminUsers from "../pages/AdminUsers";
 import BlockedAccount from "../pages/auth/BlockedAccount";
 import Quiz from "../pages/Quiz";
 import Quizzes from "../pages/Quizzes";
 import QuizSetup from "../pages/QuizSetup";
 import QuizAttemptQuestions from "../pages/QuizAttemptQuestions";
+import Profile from "../pages/Profile";
 
 function AppRoutes() {
   return (
@@ -22,12 +24,15 @@ function AppRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/verify-otp" element={<VerifyOTP />} />
-      <Route path="/login" element={<Login />} />
+      <Route element={<GuestRoute />}>
+        <Route path="/login" element={<Login />} />
+      </Route>
       <Route path="/blocked" element={<BlockedAccount />} />
 
       {/* Protected routes */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/noteGenerate" element={<Notes />} />
         <Route path="/saved-courses" element={<SavedCourses />} />
         <Route path="/quizzes" element={<Quizzes />} />
