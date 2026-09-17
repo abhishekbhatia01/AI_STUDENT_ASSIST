@@ -47,9 +47,13 @@ const authSlice = createSlice({
 export const loginThunk = (userData) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
+    dispatch(clearError());
 
     try {
-      const response = await login(userData.email, userData.password);
+      const response = await login(
+        userData.email,
+        userData.password
+      );
 
       console.log("Login response:", response);
 
@@ -60,13 +64,10 @@ export const loginThunk = (userData) => {
       return response;
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message || "An error occurred during login.";
+        error.response?.data?.message ||
+        "An error occurred during login.";
 
-      if (error.response?.status !== 403) {
-        dispatch(setError(errorMessage));
-      } else {
-        dispatch(clearError());
-      }
+      dispatch(setError(errorMessage));
 
       throw error;
     } finally {
@@ -78,6 +79,9 @@ export const loginThunk = (userData) => {
 export const getMeThunk = () => {
   return async (dispatch) => {
     dispatch(setLoading(true));
+
+    // Clear any old error before checking authentication.
+    dispatch(clearError());
 
     try {
       console.log("getMe request started");
@@ -94,23 +98,27 @@ export const getMeThunk = () => {
     } catch (error) {
       const status = error.response?.status;
 
-      console.log("getMe failed:", error.response?.data || error.message);
+      console.log(
+        "getMe failed:",
+        error.response?.data || error.message
+      );
 
       /*
-       * 401 means the user is not logged in.
-       * This is normal for a new user.
-       * Do not store it as a visible error.
+       * User is not logged in.
+       * This is normal when opening the login page.
        */
-      if (status === 401) {
+      if (status === 401 || status === 403) {
         dispatch(logout());
         return null;
       }
 
-      const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred while fetching user data.";
-
-      dispatch(setError(errorMessage));
+      /*
+       * If getMe fails for another reason, do not show
+       * the error on the login form.
+       *
+       * The user can still attempt to log in.
+       */
+      dispatch(logout());
 
       return null;
     } finally {
@@ -120,7 +128,12 @@ export const getMeThunk = () => {
   };
 };
 
-export const { setLoading, setUser, logout, setError, clearError } =
-  authSlice.actions;
+export const {
+  setLoading,
+  setUser,
+  logout,
+  setError,
+  clearError,
+} = authSlice.actions;
 
 export default authSlice.reducer;
