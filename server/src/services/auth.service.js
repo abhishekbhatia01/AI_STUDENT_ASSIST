@@ -118,7 +118,7 @@ export const loginUser = async (email, password) => {
   const user = await userRepository.findUserByEmail(email);
 
   if (!user) {
-    throw new AppErrors("User not found", 404);
+    throw new AppErrors("Invalid email or password. Please try again", 401);
   }
 
   if (user.isBlocked) {
@@ -131,7 +131,7 @@ export const loginUser = async (email, password) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw new AppErrors("Invalid credentials", 400);
+    throw new AppErrors("Invalid email or password. Please try again", 401);
   }
 
   const accessToken = generateAcessToken(user);

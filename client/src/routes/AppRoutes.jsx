@@ -16,6 +16,8 @@ import Quizzes from "../pages/Quizzes";
 import QuizSetup from "../pages/QuizSetup";
 import QuizAttemptQuestions from "../pages/QuizAttemptQuestions";
 import Profile from "../pages/Profile";
+import InterviewPreparation from "../pages/InterviewPreparation";
+import InterviewQuestions from "../pages/InterviewQuestions";
 
 function AppRoutes() {
   return (
@@ -34,6 +36,14 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/noteGenerate" element={<Notes />} />
+        <Route
+          path="/interview-preparation"
+          element={<InterviewPreparation />}
+        />
+        <Route
+          path="/interview-preparation/:id"
+          element={<InterviewQuestions />}
+        />
         <Route path="/saved-courses" element={<SavedCourses />} />
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/quizzes/:noteId" element={<QuizSetup />} />

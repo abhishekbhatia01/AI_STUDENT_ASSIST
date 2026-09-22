@@ -13,9 +13,11 @@ import notesRoutes from "./src/routers/notes.routes.js";
 import adminRoutes from "./src/routers/admin.routes.js";
 import unblockRequestRoutes from "./src/routers/unblockRequest.routes.js";
 import quizAttemptRoutes from "./src/routers/quizAttempt.routes.js";
+import interviewPreparationRoutes from "./src/routers/interviewPreparation.routes.js";
 import cors from "cors";
 import "./src/model/unblockRequest.js";
 import "./src/model/quizAttempt.js";
+import "./src/model/interviewPreparation.model.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -65,6 +67,7 @@ app.use("/api/notes", notesRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api", unblockRequestRoutes);
 app.use("/api/quiz-attempts", quizAttemptRoutes);
+app.use("/api/interview-preparation", interviewPreparationRoutes);
 
 app.use((req, res, next) => {
   next(new AppErrors(`Can't find ${req.originalUrl} on this server!`, 404));

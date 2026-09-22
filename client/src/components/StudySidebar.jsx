@@ -9,6 +9,7 @@ const navigation = [
   { label: "Generate notes", path: "/noteGenerate", icon: "✦" },
   { label: "Saved courses", path: "/saved-courses", icon: "⌁" },
   { label: "Quizzes", path: "/quizzes", icon: "?" },
+  { label: "Interview Preparation", path: "/interview-preparation", icon: "◎" },
 ];
 
 const StudySidebar = () => {

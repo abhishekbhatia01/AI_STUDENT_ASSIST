@@ -10,6 +10,35 @@ export const generateNotes = async (file, prompt) => {
   return response.data;
 };
 
+export const createInterviewPreparation = async (preparation) => {
+  const formData = new FormData();
+  formData.append("companyName", preparation.companyName || "");
+  formData.append("targetRole", preparation.targetRole || "");
+  formData.append("jobDescription", preparation.jobDescription || "");
+  formData.append("preparationType", preparation.preparationType);
+  if (preparation.file) formData.append("file", preparation.file);
+
+  const response = await api.post("/interview-preparation", formData);
+  return response.data;
+};
+
+export const getInterviewPreparations = async () => {
+  const response = await api.get("/interview-preparation");
+  return response.data;
+};
+
+export const getInterviewPreparation = async (preparationId) => {
+  const response = await api.get(`/interview-preparation/${preparationId}`);
+  return response.data;
+};
+
+export const generateMoreInterviewQuestions = async (preparationId) => {
+  const response = await api.post(
+    `/interview-preparation/${preparationId}/questions`,
+  );
+  return response.data;
+};
+
 export const generateQuiz = async (notes, difficulty, noteId) => {
   const response = await api.post("/ai/quiz", { notes, difficulty, noteId });
   return response.data;

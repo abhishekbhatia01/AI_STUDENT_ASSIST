@@ -1,7 +1,5 @@
 import Sequelize from "sequelize";
-import {
-  DATABASE_URL
-} from "./config.js";
+import { DATABASE_URL } from "./config.js";
 
 // const sequelize = new Sequalize(
 //   DATABASE_NAME,
@@ -34,8 +32,8 @@ const sequelize = new Sequelize(DATABASE_URL, {
     ssl: {
       require: true,
       rejectUnauthorized: false,
-    }
-  }
+    },
+  },
 });
 
 const connectDB = async () => {
