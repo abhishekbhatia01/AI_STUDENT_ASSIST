@@ -5,17 +5,25 @@ const api = axios.create({
   withCredentials: true,
 });
 
+let refreshPromise = null;
+
+const refreshAccessToken = () => {
+  if (!refreshPromise) {
+    refreshPromise = api.post("/refresh-token").finally(() => {
+      refreshPromise = null;
+    });
+  }
+
+  return refreshPromise;
+};
+
 api.interceptors.request.use(
   (config) => {
-    console.log(
-      "Request:",
-      config.method?.toUpperCase(),
-      config.url
-    );
+    console.log("Request:", config.method?.toUpperCase(), config.url);
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 api.interceptors.response.use(
@@ -24,15 +32,10 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    const excludedRoutes = [
-      "/login",
-      "/register",
-      "/refresh-token",
-      "/getMe",
-    ];
+    const excludedRoutes = ["/login", "/register", "/logout", "/refresh-token"];
 
     const isExcludedRoute = excludedRoutes.some((route) =>
-      originalRequest?.url?.includes(route)
+      originalRequest?.url?.includes(route),
     );
 
     if (
@@ -44,16 +47,20 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await api.post("/refresh-token");
+        await refreshAccessToken();
 
         return api(originalRequest);
       } catch (refreshError) {
+        const { default: store } = await import("../store/store.js");
+        const { logout } = await import("../store/authSlice/authSlice.js");
+        store.dispatch(logout());
+
         return Promise.reject(refreshError);
       }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

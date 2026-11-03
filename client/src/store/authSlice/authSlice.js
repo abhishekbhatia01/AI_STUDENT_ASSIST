@@ -52,8 +52,6 @@ export const loginThunk = (userData) => {
     try {
       const response = await login(userData.email, userData.password);
 
-      console.log("Login response:", response);
-
       const user =
         response.userWithoutToken?.user ||
         response.userWithoutToken ||
@@ -83,43 +81,17 @@ export const getMeThunk = () => {
     dispatch(clearError());
 
     try {
-      console.log("getMe request started");
-
       const response = await getMe();
-
-      console.log("getMe response:", response);
 
       dispatch(setUser(response.user));
 
-      console.log("setUser dispatched");
-
       return response.user;
-    } catch (error) {
-      const status = error.response?.status;
-
-      console.log("getMe failed:", error.response?.data || error.message);
-
-      /*
-       * User is not logged in.
-       * This is normal when opening the login page.
-       */
-      if (status === 401 || status === 403) {
-        dispatch(logout());
-        return null;
-      }
-
-      /*
-       * If getMe fails for another reason, do not show
-       * the error on the login form.
-       *
-       * The user can still attempt to log in.
-       */
+    } catch {
       dispatch(logout());
 
       return null;
     } finally {
       dispatch(setLoading(false));
-      console.log("getMe loading finished");
     }
   };
 };

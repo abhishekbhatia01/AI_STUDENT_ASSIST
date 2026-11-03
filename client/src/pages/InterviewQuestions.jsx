@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   generateMoreInterviewQuestions,
   getInterviewPreparation,
+  getInterviewQuestions,
 } from "../api/notes/notesApi";
 
 const labels = {
@@ -12,12 +13,33 @@ const labels = {
   hr: "HR Round",
 };
 const filters = ["All", "Easy", "Medium", "Hard"];
+const PAGE_SIZE = 5;
+
+const getPageNumbers = (totalPages, currentPage) => {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = [1];
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+  if (start > 2) pages.push("ellipsis-start");
+  for (let page = start; page <= end; page += 1) pages.push(page);
+  if (end < totalPages - 1) pages.push("ellipsis-end");
+  pages.push(totalPages);
+  return pages;
+};
 
 const InterviewQuestions = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [preparation, setPreparation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [questionsLoading, setQuestionsLoading] = useState(true);
+  const [questions, setQuestions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState(null);
+  const [questionsRefreshKey, setQuestionsRefreshKey] = useState(0);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [generatingMore, setGeneratingMore] = useState(false);
@@ -39,22 +61,33 @@ const InterviewQuestions = () => {
     loadPreparation();
   }, [id]);
 
-  const questions = useMemo(() => {
-    const query = search.trim().toLowerCase();
-    return (preparation?.questions || []).filter((question) => {
-      const matchesDifficulty =
-        filter === "All" || question.difficulty === filter;
-      const searchable = [
-        question.question,
-        question.answer,
-        question.explanation,
-        ...(question.keyPoints || []),
-      ]
-        .join(" ")
-        .toLowerCase();
-      return matchesDifficulty && (!query || searchable.includes(query));
-    });
-  }, [filter, preparation, search]);
+  useEffect(() => {
+    const loadQuestions = async () => {
+      setQuestionsLoading(true);
+      setQuestions([]);
+      try {
+        const response = await getInterviewQuestions(
+          id,
+          currentPage,
+          PAGE_SIZE,
+          search,
+          filter,
+        );
+        setQuestions(response.data.questions || []);
+        setPagination(response.data.pagination);
+      } catch (error) {
+        toast.error(
+          error.response?.data?.message ||
+            "Unable to load interview questions.",
+        );
+        setPagination(null);
+      } finally {
+        setQuestionsLoading(false);
+      }
+    };
+
+    loadQuestions();
+  }, [currentPage, filter, id, questionsRefreshKey, search]);
 
   const handleGenerateMore = async () => {
     try {
@@ -62,10 +95,7 @@ const InterviewQuestions = () => {
       setSuccessMessage("");
       const response = await generateMoreInterviewQuestions(id);
       const newQuestions = response.data?.questions || [];
-      setPreparation((current) => ({
-        ...current,
-        questions: [...current.questions, ...newQuestions],
-      }));
+      setQuestionsRefreshKey((key) => key + 1);
       setSuccessMessage(`${newQuestions.length} new questions added.`);
     } catch (error) {
       toast.error(
@@ -123,7 +153,7 @@ const InterviewQuestions = () => {
               </p>
             </div>
             <p className="text-sm font-bold text-[#287277]">
-              {preparation.questions.length} Questions
+              {pagination?.totalQuestions || 0} Questions
             </p>
           </div>
 
@@ -131,7 +161,10 @@ const InterviewQuestions = () => {
             <input
               type="search"
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              onChange={(event) => {
+                setSearch(event.target.value);
+                setCurrentPage(1);
+              }}
               placeholder="Search questions..."
               className="min-w-0 flex-1 rounded-[3px] border border-[#d7e4e9] px-3 py-3 text-sm outline-none focus:border-[#ef6f61]"
             />
@@ -140,7 +173,10 @@ const InterviewQuestions = () => {
                 <button
                   key={option}
                   type="button"
-                  onClick={() => setFilter(option)}
+                  onClick={() => {
+                    setFilter(option);
+                    setCurrentPage(1);
+                  }}
                   className={`rounded-[3px] border px-3 py-2 text-xs font-bold ${filter === option ? "border-[#ef6f61] bg-[#fff1ed] text-[#c9554d]" : "border-[#d7e4e9] text-[#557080]"}`}
                 >
                   {option}
@@ -150,7 +186,9 @@ const InterviewQuestions = () => {
           </div>
 
           <div className="mt-8 space-y-6">
-            {questions.length === 0 ? (
+            {questionsLoading ? (
+              <div className="h-64 animate-pulse rounded-[3px] bg-[#f4f9fc]" />
+            ) : questions.length === 0 ? (
               <p className="rounded-[3px] border border-dashed border-[#d7dcd3] px-5 py-12 text-center text-sm text-[#68736c]">
                 No questions found.
               </p>
@@ -162,7 +200,10 @@ const InterviewQuestions = () => {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#ef6f61]">
-                      Question {String(index + 1).padStart(2, "0")}
+                      Question{" "}
+                      {String(
+                        (currentPage - 1) * PAGE_SIZE + index + 1,
+                      ).padStart(2, "0")}
                     </p>
                     {question.difficulty && (
                       <span className="rounded-full bg-[#eef6fb] px-3 py-1 text-[10px] font-bold text-[#287277]">
@@ -207,6 +248,71 @@ const InterviewQuestions = () => {
               ))
             )}
           </div>
+
+          {pagination && pagination.totalQuestions > 0 && (
+            <div className="mt-8 flex flex-col items-center gap-3 border-t border-[#e5e9df] pt-6 sm:flex-row sm:justify-between">
+              <p className="text-xs text-[#68736c]">
+                Showing {(pagination.currentPage - 1) * pagination.pageSize + 1}
+                –
+                {Math.min(
+                  pagination.currentPage * pagination.pageSize,
+                  pagination.totalQuestions,
+                )}{" "}
+                of {pagination.totalQuestions} questions
+              </p>
+
+              {pagination.totalPages > 1 && (
+                <nav
+                  aria-label="Question pages"
+                  className="flex max-w-full items-center gap-1 overflow-x-auto"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage((page) => page - 1)}
+                    disabled={questionsLoading || !pagination.hasPreviousPage}
+                    className="shrink-0 rounded-[3px] border border-[#d7e4e9] px-3 py-2 text-xs font-bold text-[#557080] disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    ← Previous
+                  </button>
+                  {getPageNumbers(
+                    pagination.totalPages,
+                    pagination.currentPage,
+                  ).map((page) =>
+                    typeof page === "string" ? (
+                      <span
+                        key={page}
+                        className="px-2 text-xs text-[#7892a1]"
+                        aria-hidden="true"
+                      >
+                        ...
+                      </span>
+                    ) : (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => setCurrentPage(page)}
+                        disabled={questionsLoading}
+                        aria-current={
+                          pagination.currentPage === page ? "page" : undefined
+                        }
+                        className={`h-9 min-w-9 shrink-0 rounded-[3px] border px-3 text-xs font-bold ${pagination.currentPage === page ? "border-[#ef6f61] bg-[#fff1ed] text-[#c9554d]" : "border-[#d7e4e9] text-[#557080]"}`}
+                      >
+                        {page}
+                      </button>
+                    ),
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage((page) => page + 1)}
+                    disabled={questionsLoading || !pagination.hasNextPage}
+                    className="shrink-0 rounded-[3px] border border-[#d7e4e9] px-3 py-2 text-xs font-bold text-[#557080] disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    Next →
+                  </button>
+                </nav>
+              )}
+            </div>
+          )}
 
           <div className="mt-10 border-t border-[#e5e9df] pt-8 text-center">
             <button

@@ -155,7 +155,7 @@ export const getPreparations = (userId) =>
   repository.getPreparationsByUser(userId);
 
 export const getPreparation = async (userId, preparationId) => {
-  const preparation = await repository.getPreparationById(
+  const preparation = await repository.getPreparationMetadataById(
     userId,
     preparationId,
   );
@@ -164,8 +164,58 @@ export const getPreparation = async (userId, preparationId) => {
   return preparation;
 };
 
-export const generateMoreQuestions = async (userId, preparationId) => {
+export const getPreparationQuestions = async (
+  userId,
+  preparationId,
+  page = 1,
+  limit = 5,
+  search = "",
+  difficulty = "All",
+) => {
   const preparation = await getPreparation(userId, preparationId);
+  const fullPreparation = await repository.getPreparationById(
+    userId,
+    preparationId,
+  );
+  const query = search.trim().toLowerCase();
+  const questions = (fullPreparation.questions || []).filter((question) => {
+    const matchesDifficulty =
+      difficulty === "All" || question.difficulty === difficulty;
+    const searchable = [
+      question.question,
+      question.answer,
+      question.explanation,
+      ...(question.keyPoints || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return matchesDifficulty && (!query || searchable.includes(query));
+  });
+  const totalQuestions = questions.length;
+  const totalPages = Math.ceil(totalQuestions / limit);
+  const offset = (page - 1) * limit;
+
+  return {
+    questions: questions.slice(offset, offset + limit),
+    pagination: {
+      currentPage: page,
+      pageSize: limit,
+      totalQuestions,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+    },
+    preparation,
+  };
+};
+
+export const generateMoreQuestions = async (userId, preparationId) => {
+  const preparation = await repository.getPreparationById(
+    userId,
+    preparationId,
+  );
+  if (!preparation)
+    throw new AppErrors("Interview preparation not found.", 404);
   const existingQuestions = preparation.questions || [];
   const context = {
     companyName: preparation.companyName,

@@ -32,6 +32,26 @@ export const getInterviewPreparation = async (preparationId) => {
   return response.data;
 };
 
+export const getInterviewQuestions = async (
+  preparationId,
+  page = 1,
+  limit = 5,
+  search = "",
+  difficulty = "All",
+) => {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+  if (search.trim()) params.set("search", search.trim());
+  if (difficulty !== "All") params.set("difficulty", difficulty);
+
+  const response = await api.get(
+    `/interview-preparation/${preparationId}/questions?${params.toString()}`,
+  );
+  return response.data;
+};
+
 export const generateMoreInterviewQuestions = async (preparationId) => {
   const response = await api.post(
     `/interview-preparation/${preparationId}/questions`,

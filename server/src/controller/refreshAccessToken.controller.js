@@ -1,8 +1,13 @@
 import * as refreshAccessToken from "../services/refreshAccessToken.service.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import AppErrors from "../utils/AppErrors.utils.js";
 
 export const getNewAccessToken = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
+
+  if (!refreshToken) {
+    throw new AppErrors("Refresh token not found", 401);
+  }
 
   const newAccessToken =
     await refreshAccessToken.generateNewAccessToken(refreshToken);
